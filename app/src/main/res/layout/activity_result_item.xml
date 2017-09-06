@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+<TextView
+    android:id="@+id/itv1"
+    android:layout_height="wrap_content"
+    android:layout_width="0dp"
+    android:layout_gravity="center_vertical"
+    android:layout_weight="2"
+    android:gravity="center_horizontal"
+    android:text="条目1" />
+
+    <TextView
+        android:id="@+id/itv2"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="2"
+        android:gravity="center_horizontal"
+        android:text="条目2" />
+
+    <TextView
+        android:id="@+id/itv3"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="2"
+        android:gravity="center_horizontal"
+        android:text="条目3" />
+
+    <TextView
+        android:id="@+id/itv4"
+        android:onClick="click"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="2"
+        android:gravity="center_horizontal"
+        android:text="条目4  " />
+</LinearLayout>
