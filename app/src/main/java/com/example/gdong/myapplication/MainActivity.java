@@ -7,10 +7,14 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+
+import org.csii.yeeframe.YeeBitmap;
 
 public class MainActivity extends AppCompatActivity {
     Button button;
     EditText editText;
+    LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +22,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         button= (Button) findViewById(R.id.main_select);
         editText = (EditText) findViewById(R.id.main_editText);
+        linearLayout= (LinearLayout) findViewById(R.id.content);
+        linearLayout.setBackgroundResource(R.drawable.main_background);
+
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
