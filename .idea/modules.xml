@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MyApplication2.iml" filepath="$PROJECT_DIR$/MyApplication2.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/photoview/photoview.iml" filepath="$PROJECT_DIR$/photoview/photoview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/yeeFrame/yeeFrame.iml" filepath="$PROJECT_DIR$/yeeFrame/yeeFrame.iml" />
     </modules>
   </component>
 </project>

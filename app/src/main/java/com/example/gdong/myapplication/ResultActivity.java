@@ -9,7 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -20,6 +22,8 @@ import java.util.List;
  */
 
 public class ResultActivity extends Activity {
+    ImageView iv_add;
+    SearchView iv_search;
     private RecyclerView mRecyclerView;
     private List<String> mDatas;
     private HomeAdapter mAdapter;
@@ -29,6 +33,8 @@ public class ResultActivity extends Activity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+        iv_add= (ImageView) findViewById(R.id.add);
+        iv_search= (SearchView) findViewById(R.id.search);
 
         initData();
         mRecyclerView = (RecyclerView) findViewById(R.id.review);
@@ -47,6 +53,20 @@ public class ResultActivity extends Activity {
             mDatas.add("" + (char) i);
         }
     }
+
+    public void click(View view) {
+        int id = view.getId();
+        switch (id) {
+            case R.id.add:
+                Intent intent = new Intent(ResultActivity.this,DetailActivity.class);
+                startActivity(intent);
+                break;
+
+        }
+    }
+
+
+
 
     class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>
     {
@@ -87,8 +107,6 @@ public class ResultActivity extends Activity {
         {
             return mDatas.size();
         }
-
-
 
         class MyViewHolder extends RecyclerView.ViewHolder
         {

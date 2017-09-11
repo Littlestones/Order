@@ -2,12 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:background="@drawable/main_background"
-
     android:layout_height="match_parent">
-<ImageView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
-
 
     <LinearLayout
 
@@ -19,6 +14,8 @@
         android:layout_height="40dp">
 
         <EditText
+            android:singleLine="true"
+            android:hint="输入123456789进入管理模式"
             android:background="@color/white"
             android:id="@+id/main_editText"
             android:layout_width="match_parent"
