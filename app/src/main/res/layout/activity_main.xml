@@ -15,7 +15,7 @@
 
         <EditText
             android:singleLine="true"
-            android:hint="输入123456789进入管理模式"
+            android:hint="请输入订单编号"
             android:background="@color/white"
             android:id="@+id/main_editText"
             android:layout_width="match_parent"

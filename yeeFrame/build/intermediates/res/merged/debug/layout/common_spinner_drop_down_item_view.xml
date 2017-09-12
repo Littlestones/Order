@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.csii.yeeframe.extend.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal" >
+
+    <TextView
+        android:tag="text"
+        style="@style/spinner_dropdown_text"
+        android:layout_weight="1"
+        android:duplicateParentState="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dip"
+        android:duplicateParentState="true"
+        android:paddingBottom="5dip"
+        android:paddingTop="5dip"
+        android:src="@drawable/ic_hideable_item" />
+
+</org.csii.yeeframe.extend.CheckableLinearLayout>

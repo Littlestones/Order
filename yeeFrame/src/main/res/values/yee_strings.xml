@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="text_exit_app">确定退出移动金融应用平台?</string>
+    <string name="text_confrim">确定</string>
+    <string name="text_cancel">取消</string>
+
+</resources>

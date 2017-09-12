@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Messages IDs -->
+    <item name="dialog_text_exit" type="id"/>
+    <item name="dialog_confirm" type="id"/>
+    <item name="dialog_cancel" type="id"/>
+
+</resources>

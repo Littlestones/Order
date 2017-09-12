@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_button_blue.xml",
+        "source": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\build\\intermediates\\bundles\\debug\\res\\drawable\\common_button_blue.xml"
+    },
+    {
+        "merged": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\ic_hideable_item.xml",
+        "source": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\build\\intermediates\\bundles\\debug\\res\\drawable\\ic_hideable_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_button_orange.xml",
+        "source": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\build\\intermediates\\bundles\\debug\\res\\drawable\\common_button_orange.xml"
+    },
+    {
+        "merged": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_button_gray.xml",
+        "source": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\build\\intermediates\\bundles\\debug\\res\\drawable\\common_button_gray.xml"
+    }
+]
