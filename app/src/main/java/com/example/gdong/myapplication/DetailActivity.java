@@ -5,8 +5,10 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -19,6 +21,7 @@ import com.vondear.rxtools.view.dialog.RxDialog;
 import com.vondear.rxtools.view.dialog.RxDialogWheelYearMonthDay;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -29,13 +32,16 @@ public class DetailActivity extends Activity {
     TextView xiadan;
     TextView jiaoqi;
     TextView queren;
-
+    private ArrayList<String> image_urls;
+    private int image_index=0;
+    private Bundle mbundle;
     private Calendar cal;
     private int year,month,day;
     private File currentFile;
     private ImageView currentImageView;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        image_urls =new ArrayList<String>();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         getDate();
@@ -45,11 +51,21 @@ public class DetailActivity extends Activity {
     }
     public void click(View view){
         int id= view.getId();
+        if(view instanceof ImageView){
+            currentImageView = (ImageView) view;
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            currentFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
+                    + "/test/" + System.currentTimeMillis() + ".jpg");
+            currentFile.getParentFile().mkdirs();
+            Uri uri = Uri.fromFile(currentFile);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+            startActivityForResult(intent, 100);
+            image_index=0;
+
+        }
         switch (id){
             case R.id.add1:
-                currentImageView = (ImageView) view;
-                Intent intent = RxCameraUtils.getOpenCameraIntent();
-                startActivity(intent);
+
                 break;
             case R.id.detail_save:
                 break;
@@ -94,7 +110,23 @@ public class DetailActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
-                case 200:
+                case 100:
+                    currentImageView.setImageURI(Uri.fromFile(currentFile));
+                    image_urls.add(currentFile.toString());
+                    currentImageView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent();
+                             mbundle= new Bundle();
+                             mbundle.putStringArrayList("image_urls",image_urls);
+                             mbundle.putInt("image_index",image_index);
+                             intent.setClass(DetailActivity.this, ImgDetailActivity.class);
+                             intent.putExtras(mbundle);
+                             startActivity(intent);
+                        }
+                    });
+                    break;
+
 
             }
         }

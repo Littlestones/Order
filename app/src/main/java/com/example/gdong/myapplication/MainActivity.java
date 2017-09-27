@@ -22,8 +22,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         button= (Button) findViewById(R.id.main_select);
         editText = (EditText) findViewById(R.id.main_editText);
-        linearLayout= (LinearLayout) findViewById(R.id.content);
-        linearLayout.setBackgroundResource(R.drawable.main_background);
+        //linearLayout= (LinearLayout) findViewById(R.id.content);
+        //linearLayout.setBackgroundResource(R.drawable.main_background);
 
 
         button.setOnClickListener(new View.OnClickListener() {

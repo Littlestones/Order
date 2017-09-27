@@ -173,6 +173,8 @@ public final class R {
         public static final int common_button_gray=0x7f020002;
         public static final int common_button_orange=0x7f020003;
         public static final int ic_hideable_item=0x7f020004;
+        public static final int point_grey=0x7f020005;
+        public static final int point_white=0x7f020006;
     }
     public static final class id {
         public static final int dialog_cancel=0x7f060000;

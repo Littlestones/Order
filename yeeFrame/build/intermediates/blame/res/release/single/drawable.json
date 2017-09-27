@@ -4,8 +4,16 @@
         "source": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\src\\main\\res\\drawable\\common_button_blue.xml"
     },
     {
+        "merged": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\build\\intermediates\\res\\merged\\release\\drawable\\point_grey.webp",
+        "source": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\src\\main\\res\\drawable\\point_grey.webp"
+    },
+    {
         "merged": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\build\\intermediates\\res\\merged\\release\\drawable\\ic_hideable_item.xml",
         "source": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\src\\main\\res\\drawable\\ic_hideable_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\build\\intermediates\\res\\merged\\release\\drawable\\point_white.webp",
+        "source": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\src\\main\\res\\drawable\\point_white.webp"
     },
     {
         "merged": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\build\\intermediates\\res\\merged\\release\\drawable\\common_button_gray.xml",

@@ -75,6 +75,8 @@
             android:orientation="vertical">
 
             <ImageView
+                android:onClick="click"
+                android:id="@+id/add2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -108,6 +110,8 @@
             android:orientation="vertical">
 
             <ImageView
+                android:onClick="click"
+                android:id="@+id/add3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -141,6 +145,8 @@
             android:orientation="vertical">
 
             <ImageView
+                android:onClick="click"
+                android:id="@+id/add4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -181,6 +187,8 @@
             android:orientation="vertical">
 
             <ImageView
+                android:onClick="click"
+                android:id="@+id/add5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -213,6 +221,8 @@
             android:orientation="vertical">
 
             <ImageView
+                android:onClick="click"
+                android:id="@+id/add6"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -246,6 +256,8 @@
             android:orientation="vertical">
 
             <ImageView
+                android:onClick="click"
+                android:id="@+id/add7"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -279,6 +291,8 @@
             android:orientation="vertical">
 
             <ImageView
+                android:onClick="click"
+                android:id="@+id/add8"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

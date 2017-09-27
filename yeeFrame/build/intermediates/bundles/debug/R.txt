@@ -156,6 +156,8 @@ int drawable common_button_blue 0x7f020001
 int drawable common_button_gray 0x7f020002
 int drawable common_button_orange 0x7f020003
 int drawable ic_hideable_item 0x7f020004
+int drawable point_grey 0x7f020005
+int drawable point_white 0x7f020006
 int id dialog_cancel 0x7f060000
 int id dialog_confirm 0x7f060001
 int id dialog_text_exit 0x7f060002

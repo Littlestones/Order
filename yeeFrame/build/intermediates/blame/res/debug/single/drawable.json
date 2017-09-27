@@ -1,5 +1,13 @@
 [
     {
+        "merged": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\build\\intermediates\\res\\merged\\debug\\drawable\\point_white.webp",
+        "source": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\src\\main\\res\\drawable\\point_white.webp"
+    },
+    {
+        "merged": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\build\\intermediates\\res\\merged\\debug\\drawable\\point_grey.webp",
+        "source": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\src\\main\\res\\drawable\\point_grey.webp"
+    },
+    {
         "merged": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\build\\intermediates\\res\\merged\\debug\\drawable\\common_button_blue.xml",
         "source": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\src\\main\\res\\drawable\\common_button_blue.xml"
     },
