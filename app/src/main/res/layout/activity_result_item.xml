@@ -14,31 +14,4 @@
     android:gravity="center_horizontal"
     android:text="条目1" />
 
-    <TextView
-        android:id="@+id/itv2"
-        android:layout_height="wrap_content"
-        android:layout_width="0dp"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="2"
-        android:gravity="center_horizontal"
-        android:text="条目2" />
-
-    <TextView
-        android:id="@+id/itv3"
-        android:layout_height="wrap_content"
-        android:layout_width="0dp"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="2"
-        android:gravity="center_horizontal"
-        android:text="条目3" />
-
-    <TextView
-        android:id="@+id/itv4"
-        android:onClick="click"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="2"
-        android:gravity="center_horizontal"
-        android:text="条目4  " />
 </LinearLayout>

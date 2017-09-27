@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ResultActivity"></activity>
-        <activity android:name=".DetailActivity"></activity>
+        <activity android:name=".DetailActivity" android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name=".CusDetailActivity"></activity>
         <activity android:name=".ImgDetailActivity"></activity>
     </application>

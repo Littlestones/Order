@@ -2,13 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#b5bac3">
+    android:background="#000000">
 
     <com.example.gdong.myapplication.ui.HackyViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#b5bac3" />
+        android:background="#000000" />
 
     <LinearLayout
         android:id="@+id/ll_indicator"

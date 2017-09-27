@@ -102,8 +102,6 @@ public class ImgDetailActivity extends Activity {
             Log.i("1111",mImageUrl);
             Glide.with(ImgDetailActivity.this)
                     .load(mImageUrl)
-                    .skipMemoryCache(true)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .fitCenter()
                     .into(new GlideDrawableImageViewTarget(photoView) {
                         @Override
