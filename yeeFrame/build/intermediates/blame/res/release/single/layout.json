@@ -1,5 +1,9 @@
 [
     {
+        "merged": "C:\\Users\\gdong\\AndroidStudioProjects\\Order2\\yeeFrame\\build\\intermediates\\res\\merged\\release\\layout\\common_spinner_item_view.xml",
+        "source": "C:\\Users\\gdong\\AndroidStudioProjects\\Order2\\yeeFrame\\src\\main\\res\\layout\\common_spinner_item_view.xml"
+    },
+    {
         "merged": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\build\\intermediates\\res\\merged\\release\\layout\\common_spinner_item_view.xml",
         "source": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\src\\main\\res\\layout\\common_spinner_item_view.xml"
     },
@@ -8,7 +12,15 @@
         "source": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\src\\main\\res\\layout\\dialog_default.xml"
     },
     {
+        "merged": "C:\\Users\\gdong\\AndroidStudioProjects\\Order2\\yeeFrame\\build\\intermediates\\res\\merged\\release\\layout\\common_spinner_drop_down_item_view.xml",
+        "source": "C:\\Users\\gdong\\AndroidStudioProjects\\Order2\\yeeFrame\\src\\main\\res\\layout\\common_spinner_drop_down_item_view.xml"
+    },
+    {
         "merged": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\build\\intermediates\\res\\merged\\release\\layout\\common_spinner_drop_down_item_view.xml",
         "source": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\src\\main\\res\\layout\\common_spinner_drop_down_item_view.xml"
+    },
+    {
+        "merged": "C:\\Users\\gdong\\AndroidStudioProjects\\Order2\\yeeFrame\\build\\intermediates\\res\\merged\\release\\layout\\dialog_default.xml",
+        "source": "C:\\Users\\gdong\\AndroidStudioProjects\\Order2\\yeeFrame\\src\\main\\res\\layout\\dialog_default.xml"
     }
 ]

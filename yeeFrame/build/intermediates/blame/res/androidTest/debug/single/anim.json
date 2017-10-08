@@ -1,5 +1,13 @@
 [
     {
+        "merged": "C:\\Users\\gdong\\AndroidStudioProjects\\Order2\\yeeFrame\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\slide_left_in.xml",
+        "source": "C:\\Users\\gdong\\AndroidStudioProjects\\Order2\\yeeFrame\\build\\intermediates\\bundles\\debug\\res\\anim\\slide_left_in.xml"
+    },
+    {
+        "merged": "C:\\Users\\gdong\\AndroidStudioProjects\\Order2\\yeeFrame\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\slide_right_out.xml",
+        "source": "C:\\Users\\gdong\\AndroidStudioProjects\\Order2\\yeeFrame\\build\\intermediates\\bundles\\debug\\res\\anim\\slide_right_out.xml"
+    },
+    {
         "merged": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\slide_right_out.xml",
         "source": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\build\\intermediates\\bundles\\debug\\res\\anim\\slide_right_out.xml"
     },
@@ -10,6 +18,14 @@
     {
         "merged": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\slide_left_out.xml",
         "source": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\build\\intermediates\\bundles\\debug\\res\\anim\\slide_left_out.xml"
+    },
+    {
+        "merged": "C:\\Users\\gdong\\AndroidStudioProjects\\Order2\\yeeFrame\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\slide_left_out.xml",
+        "source": "C:\\Users\\gdong\\AndroidStudioProjects\\Order2\\yeeFrame\\build\\intermediates\\bundles\\debug\\res\\anim\\slide_left_out.xml"
+    },
+    {
+        "merged": "C:\\Users\\gdong\\AndroidStudioProjects\\Order2\\yeeFrame\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\slide_right_in.xml",
+        "source": "C:\\Users\\gdong\\AndroidStudioProjects\\Order2\\yeeFrame\\build\\intermediates\\bundles\\debug\\res\\anim\\slide_right_in.xml"
     },
     {
         "merged": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\slide_left_in.xml",

@@ -2,5 +2,9 @@
     {
         "merged": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_list_focused_holo.png",
         "source": "C:\\Users\\Gdong\\cap\\MyApplication2\\yeeFrame\\src\\main\\res\\drawable-hdpi\\abc_list_focused_holo.png"
+    },
+    {
+        "merged": "C:\\Users\\gdong\\AndroidStudioProjects\\Order2\\yeeFrame\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_list_focused_holo.png",
+        "source": "C:\\Users\\gdong\\AndroidStudioProjects\\Order2\\yeeFrame\\src\\main\\res\\drawable-hdpi\\abc_list_focused_holo.png"
     }
 ]
