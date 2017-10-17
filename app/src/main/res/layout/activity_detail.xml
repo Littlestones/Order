@@ -3,426 +3,355 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <RelativeLayout
-        android:layout_margin="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:textSize="18sp"
-            android:id="@+id/num_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="订单编号:"
-            android:layout_centerVertical="true"
-            android:layout_alignParentStart="true" />
-
-        <EditText
-            android:background="@drawable/edit_background"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="123"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/num_title" />
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="2">
-        <LinearLayout
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <ImageView
-                android:onClick="click"
-                android:id="@+id/add1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/a1" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    style="@style/detail_text"
-                    android:text="描述" />
-                <ImageView
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/a2"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <ImageView
-                android:onClick="click"
-                android:id="@+id/add2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/a1" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/detail_text"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:text="描述" />
-
-                <ImageView
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/a2"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <ImageView
-                android:onClick="click"
-                android:id="@+id/add3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/a1" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/detail_text"
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="描述" />
-
-                <ImageView
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/a2"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <ImageView
-                android:onClick="click"
-                android:id="@+id/add4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/a1" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_weight="1"
-                    style="@style/detail_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="描述" />
-
-                <ImageView
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/a2"/>
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="2">
-        <LinearLayout
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <ImageView
-                android:onClick="click"
-                android:id="@+id/add5"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/a1" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    style="@style/detail_text"
-                    android:text="描述" />
-                <ImageView
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/a2"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <ImageView
-                android:onClick="click"
-                android:id="@+id/add6"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/a1" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/detail_text"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:text="描述" />
-
-                <ImageView
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/a2"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <ImageView
-                android:onClick="click"
-                android:id="@+id/add7"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/a1" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/detail_text"
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="描述" />
-
-                <ImageView
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/a2"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <ImageView
-                android:onClick="click"
-                android:id="@+id/add8"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/a1" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_weight="1"
-                    style="@style/detail_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="描述" />
-
-                <ImageView
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/a2"/>
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:layout_weight="2">
-
+        android:layout_height="match_parent">
         <LinearLayout
+            android:layout_margin="6dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
             android:orientation="vertical">
 
-            <TextView
+            <RelativeLayout
 
-                android:id="@+id/detail_xiadan"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="click"
-                android:text="下单日期："
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/detail_jiaoqi"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:onClick="click"
-                android:text="交付日期："
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/detail_queren"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:onClick="click"
-                android:text="确认日期："
-                android:textSize="20sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content">
 
                 <TextView
+                    android:textSize="18sp"
+                    android:id="@+id/num_title"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:text="其他："
-                    android:textSize="20sp" />
+                    android:layout_height="wrap_content"
+                    android:text="订单编号:"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true" />
 
                 <EditText
-                    android:id="@+id/editText2"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:background="@drawable/search_background_nostroke" />
+                    android:id="@+id/detail_id"
+                    android:background="@drawable/edit_background"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入编号"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/num_title" />
 
-
-            </LinearLayout>
+            </RelativeLayout>
 
             <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/detail_cancel"
+                android:layout_height="match_parent"
+                android:layout_weight="2">
+                <LinearLayout
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="click"
-                    android:text="取消" />
+                    android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/detail_save"
+                    <ImageView
+                        style="@style/detail_img_layout"
+                        android:id="@+id/add1"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_gravity="center_vertical"
+                            style="@style/detail_text"
+                            android:text="描述" />
+                        <ImageView
+                            style="@style/detail_icon_delete"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        style="@style/detail_img_layout" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/detail_text"
+                            android:text="描述" />
+
+                        <ImageView
+                            style="@style/detail_icon_delete"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        style="@style/detail_img_layout" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/detail_text"
+                            android:text="描述" />
+
+                        <ImageView
+                            style="@style/detail_icon_delete"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        style="@style/detail_img_layout"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/detail_text"
+                            android:text="描述" />
+
+                        <ImageView
+                            style="@style/detail_icon_delete"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2">
+                <LinearLayout
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        style="@style/detail_img_layout" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/detail_text"
+                            android:text="描述"
+                            />
+                        <ImageView
+                            style="@style/detail_icon_delete"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        style="@style/detail_img_layout" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/detail_text"
+                            android:text="描述" />
+
+                        <ImageView
+                            style="@style/detail_icon_delete"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        style="@style/detail_img_layout" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/detail_text"
+                            android:text="描述" />
+
+                        <ImageView
+                            style="@style/detail_icon_delete"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        style="@style/detail_img_layout" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/detail_text"
+                            android:text="描述" />
+                        <ImageView
+                            style="@style/detail_icon_delete"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+
+                android:layout_weight="2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <TextView
+
+                    android:id="@+id/detail_xiadan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:onClick="click"
-                    android:text="保存" />
+                    android:text="下单日期："
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/detail_jiaoqi"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:onClick="click"
+                    android:text="交付日期："
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/detail_queren"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:onClick="click"
+                    android:text="确认日期："
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:text="其他："
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/detail_remark"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:background="@drawable/search_background_nostroke" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/detail_cancel"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="click"
+                        android:text="取消" />
+
+                    <Button
+                        android:id="@+id/detail_save"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="click"
+                        android:text="保存" />
+
+                </LinearLayout>
+
 
             </LinearLayout>
+
+
 
 
         </LinearLayout>
 
-
     </ScrollView>
+
+
 
 
 </LinearLayout>

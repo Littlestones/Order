@@ -3,9 +3,7 @@ package com.example.gdong.myapplication;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.example.gdong.myapplication.mode.Company;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,11 +22,11 @@ import java.util.List;
  * Created by Gdong on 2017/8/28.
  */
 
-public class ResultActivity extends Activity {
+public class CompanyListActivity extends Activity {
     ImageView iv_add;
     SearchView iv_search;
     private RecyclerView mRecyclerView;
-    private List<String> mDatas;
+    private ArrayList<Company> mDatas = MyApplication.companyArrayList;
     private HomeAdapter mAdapter;
 
     @Override
@@ -47,18 +47,13 @@ public class ResultActivity extends Activity {
 
     protected void initData()
     {
-        mDatas = new ArrayList<String>();
-        for (int i = 'A'; i < 'z'; i++)
-        {
-            mDatas.add("" + (char) i);
-        }
     }
 
     public void click(View view) {
         int id = view.getId();
         switch (id) {
             case R.id.add:
-                Intent intent = new Intent(ResultActivity.this,DetailActivity.class);
+                Intent intent = new Intent(CompanyListActivity.this,DetailActivity.class);
                 startActivity(intent);
                 break;
 
@@ -75,13 +70,13 @@ public class ResultActivity extends Activity {
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
             MyViewHolder holder = new MyViewHolder(LayoutInflater.from(
-                    ResultActivity.this).inflate(R.layout.activity_result_item, parent,
+                    CompanyListActivity.this).inflate(R.layout.activity_result_item, parent,
                     false));
             return holder;
         }
 
         @Override
-        public void onBindViewHolder(MyViewHolder holder, int position)
+        public void onBindViewHolder(MyViewHolder holder, final int position)
         {
             holder.tv1.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
@@ -92,11 +87,14 @@ public class ResultActivity extends Activity {
             holder.linearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent =new Intent(ResultActivity.this,DetailActivity.class);
+                    Intent intent =new Intent(CompanyListActivity.this,OrderListActivity.class);
+                    intent.putExtra("id",mDatas.get(position).getId());
                     startActivity(intent);
                 }
             });
-            holder.tv1.setText(mDatas.get(position));
+
+
+            holder.tv1.setText(mDatas.get(position).getName());
         }
 
         @Override
@@ -109,6 +107,7 @@ public class ResultActivity extends Activity {
         {
             LinearLayout linearLayout;
             TextView tv1;
+            ImageView iv1;
 
 
             public MyViewHolder(View view)
@@ -116,6 +115,7 @@ public class ResultActivity extends Activity {
                 super(view);
                 linearLayout= (LinearLayout) view.findViewById(R.id.item);
                 tv1 = (TextView) view.findViewById(R.id.itv1);
+                iv1 = (ImageView) view.findViewById(R.id.iv1);
 
             }
         }

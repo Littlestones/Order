@@ -10,12 +10,15 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gdong.myapplication.extend.YeeDialog;
+import com.example.gdong.myapplication.mode.Order;
+import com.example.gdong.myapplication.ui.MyDialog;
 import com.vondear.rxtools.RxCameraUtils;
 import com.vondear.rxtools.view.dialog.RxDialog;
 import com.vondear.rxtools.view.dialog.RxDialogWheelYearMonthDay;
@@ -24,14 +27,21 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import static com.example.gdong.myapplication.MyApplication.orderArrayList;
+
 /**
  * Created by Gdong on 2017/8/28.
  */
 
 public class DetailActivity extends Activity {
-    TextView xiadan;
-    TextView jiaoqi;
-    TextView queren;
+    private TextView xiadan;
+    private TextView jiaoqi;
+    private TextView queren;
+    private TextView detail_id;
+    private TextView detail_remark;
+
+
+
     private ArrayList<String> image_urls;
     private int image_index=0;
     private Bundle mbundle;
@@ -48,10 +58,14 @@ public class DetailActivity extends Activity {
         xiadan= (TextView) findViewById(R.id.detail_xiadan);
         jiaoqi= (TextView) findViewById(R.id.detail_jiaoqi);
         queren= (TextView) findViewById(R.id.detail_queren);
+        detail_id= (TextView) findViewById(R.id.detail_id);
+        detail_remark= (TextView) findViewById(R.id.detail_remark);
+
     }
     public void click(View view){
         int id= view.getId();
         if(view instanceof ImageView){
+            if(view.getTag().toString().trim().equals("add")){
             currentImageView = (ImageView) view;
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             currentFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
@@ -62,12 +76,45 @@ public class DetailActivity extends Activity {
             startActivityForResult(intent, 100);
             image_index=0;
 
+            }else if (view.getTag().toString().trim().equals("add_b")){
+                Intent intent = new Intent();
+                mbundle= new Bundle();
+                mbundle.putStringArrayList("image_urls",image_urls);
+                mbundle.putInt("image_index",image_index);
+                intent.setClass(DetailActivity.this, ImgDetailActivity.class);
+                intent.putExtras(mbundle);
+                startActivity(intent);
+
+            }else {
+                ViewGroup vg =(ViewGroup)view.getParent().getParent();
+                ImageView  imgview = (ImageView) vg.getChildAt(0);
+                imgview.setImageResource(R.drawable.a1);
+                imgview.setTag("add");
+
+            }
+
         }
         switch (id){
-            case R.id.add1:
-
+            case R.id.detail_cancel:
+                finish();
                 break;
+
             case R.id.detail_save:
+                if(detail_id.getText().toString().trim().equals("")){
+                    new MyDialog(this,"请输入订单编号");
+
+                    return;
+            }
+                Order order = new Order(detail_id.getText().toString().trim(),
+                        image_urls,
+                        xiadan.getText().toString().trim(),
+                        jiaoqi.getText().toString().trim(),
+                        queren.getText().toString().trim(),
+                        detail_remark.getText().toString().trim()
+                        );
+                orderArrayList.add(order);
+                finish();
+
                 break;
             case R.id.detail_xiadan:
                 DatePickerDialog.OnDateSetListener listener=new DatePickerDialog.OnDateSetListener() {
@@ -113,18 +160,7 @@ public class DetailActivity extends Activity {
                 case 100:
                     currentImageView.setImageURI(Uri.fromFile(currentFile));
                     image_urls.add(currentFile.toString());
-                    currentImageView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent();
-                             mbundle= new Bundle();
-                             mbundle.putStringArrayList("image_urls",image_urls);
-                             mbundle.putInt("image_index",image_index);
-                             intent.setClass(DetailActivity.this, ImgDetailActivity.class);
-                             intent.putExtras(mbundle);
-                             startActivity(intent);
-                        }
-                    });
+                    currentImageView.setTag("add_b");
                     break;
 
 

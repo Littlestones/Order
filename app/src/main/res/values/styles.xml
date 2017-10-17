@@ -26,8 +26,27 @@
     </style>
     <style name="detail_text">
         <item name="android:textSize">20sp</item>
-        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+    <style name="detail_img_layout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">100dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:src">@drawable/a1</item>
+        <item name="android:tag">add</item>
+        <item name="android:onClick">click</item>
+    </style>
 
+    <style name="detail_icon_delete">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">2</item>
+        <item name="android:src">@drawable/a2</item>
+        <item name="android:tag">delete</item>
+        <item name="android:onClick">click</item>
     </style>
 
 </resources>
