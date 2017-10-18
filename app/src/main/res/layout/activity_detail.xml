@@ -52,7 +52,7 @@
 
                     <ImageView
                         style="@style/detail_img_layout"
-                        android:id="@+id/add1"
+                        android:id="@id/img1"
                         />
 
                     <LinearLayout
@@ -80,6 +80,7 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@id/img2"
                         style="@style/detail_img_layout" />
 
                     <LinearLayout

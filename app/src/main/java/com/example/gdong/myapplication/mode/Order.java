@@ -1,5 +1,6 @@
 package com.example.gdong.myapplication.mode;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -7,7 +8,7 @@ import java.util.Date;
  * Created by Gdong on 2017/10/16.
  */
 
-public class Order {
+public class Order  implements Serializable{
     private String id;
     private ArrayList<String> image_urls;
     private String detail_xiadan;
@@ -26,6 +27,18 @@ public class Order {
         this.detail_jiaoqi = detail_jiaoqi;
         this.detail_queren = detail_queren;
         this.remark = remark;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id='" + id + '\'' +
+                ", image_urls=" + image_urls +
+                ", detail_xiadan='" + detail_xiadan + '\'' +
+                ", detail_jiaoqi='" + detail_jiaoqi + '\'' +
+                ", detail_queren='" + detail_queren + '\'' +
+                ", remark='" + remark + '\'' +
+                '}';
     }
 
     public void setId(String id) {

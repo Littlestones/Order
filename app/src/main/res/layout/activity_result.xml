@@ -18,12 +18,15 @@
             android:textSize="20dp" />
 
         <ImageView
+            android:onClick="click"
             android:id="@+id/add"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"
-            android:src="@drawable/add" />
+            android:src="@drawable/add"
+            tools:ignore="ContentDescription,RtlHardcoded"
+            android:contentDescription="" />
 
         <SearchView
             android:id="@+id/search"

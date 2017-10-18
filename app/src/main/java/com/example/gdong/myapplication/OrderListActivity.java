@@ -20,11 +20,18 @@ import com.example.gdong.myapplication.mode.Order;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.gdong.myapplication.MyApplication.REQUESTCODE_ADD;
+import static com.example.gdong.myapplication.MyApplication.REQUESTCODE_UPDATE;
+
 /**
  * Created by Gdong on 2017/8/28.
  */
 
-public class OrderListActivity extends Activity {
+public class OrderListActivity extends Activity{
+
+
+
+
     ImageView iv_add;
     SearchView iv_search;
     private RecyclerView mRecyclerView;
@@ -51,7 +58,6 @@ public class OrderListActivity extends Activity {
         mDatas = MyApplication.orderArrayList;
 
         mAdapter.notifyDataSetChanged();
-        Log.i("1",mDatas.toString());
         super.onResume();
     }
 
@@ -60,14 +66,20 @@ public class OrderListActivity extends Activity {
         switch (id) {
             case R.id.add:
                 Intent intent = new Intent(OrderListActivity.this,DetailActivity.class);
-                startActivity(intent);
+                intent.putExtra("data",new Order(null,null,"","","",null));
+                intent.putExtra("type",REQUESTCODE_ADD);
+                startActivityForResult(intent,REQUESTCODE_ADD);
                 break;
 
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>
     {
@@ -82,7 +94,7 @@ public class OrderListActivity extends Activity {
         }
 
         @Override
-        public void onBindViewHolder(MyViewHolder holder, int position)
+        public void onBindViewHolder(MyViewHolder holder, final int position)
         {
             holder.tv1.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
@@ -94,7 +106,10 @@ public class OrderListActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     Intent intent =new Intent(OrderListActivity.this,DetailActivity.class);
-                    startActivity(intent);
+                    intent.putExtra("index",position);
+                    intent.putExtra("data",mDatas.get(position));
+                    intent.putExtra("type",REQUESTCODE_UPDATE);
+                    startActivityForResult(intent,REQUESTCODE_UPDATE);
                 }
             });
             holder.tv1.setText(mDatas.get(position).getId());

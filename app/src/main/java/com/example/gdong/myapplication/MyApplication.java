@@ -16,6 +16,10 @@ import java.util.ArrayList;
  */
 
 public class MyApplication extends Application{
+    public static final int REQUESTCODE_ADD    = 100;
+    public static final int REQUESTCODE_UPDATE    = 101;
+    public static final int REQUESTCODE_select    = 102;
+
     public static ArrayList<Company> companyArrayList ;
     public static ArrayList<Order> orderArrayList;
     @Override

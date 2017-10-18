@@ -27,6 +27,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import static com.example.gdong.myapplication.MyApplication.REQUESTCODE_ADD;
+import static com.example.gdong.myapplication.MyApplication.REQUESTCODE_UPDATE;
 import static com.example.gdong.myapplication.MyApplication.orderArrayList;
 
 /**
@@ -39,9 +41,6 @@ public class DetailActivity extends Activity {
     private TextView queren;
     private TextView detail_id;
     private TextView detail_remark;
-
-
-
     private ArrayList<String> image_urls;
     private int image_index=0;
     private Bundle mbundle;
@@ -49,9 +48,10 @@ public class DetailActivity extends Activity {
     private int year,month,day;
     private File currentFile;
     private ImageView currentImageView;
+    private Intent intent;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        image_urls =new ArrayList<String>();
+        image_urls =new ArrayList<String>(8);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         getDate();
@@ -60,6 +60,35 @@ public class DetailActivity extends Activity {
         queren= (TextView) findViewById(R.id.detail_queren);
         detail_id= (TextView) findViewById(R.id.detail_id);
         detail_remark= (TextView) findViewById(R.id.detail_remark);
+        initData();
+
+    }
+
+
+
+    public void initData(){
+
+        intent= getIntent();
+        Log.i("1",intent.getIntExtra("index",-1)+"");
+        Order order = (Order) intent.getSerializableExtra("data");
+        if(intent.getIntExtra("type",REQUESTCODE_ADD)==REQUESTCODE_ADD){
+            xiadan.setText("下单日期：");
+            jiaoqi.setText("交付日期：");
+            queren.setText("确认日期：");
+            detail_id.setText("");
+            detail_remark.setText("");
+
+        }else {
+            xiadan.setText(order.getDetail_xiadan());
+            jiaoqi.setText(order.getDetail_jiaoqi());
+            queren.setText(order.getDetail_queren());
+            detail_id.setText(order.getId());
+            detail_remark.setText(order.getRemark());
+        }
+
+
+
+
 
     }
     public void click(View view){
@@ -84,13 +113,11 @@ public class DetailActivity extends Activity {
                 intent.setClass(DetailActivity.this, ImgDetailActivity.class);
                 intent.putExtras(mbundle);
                 startActivity(intent);
-
             }else {
                 ViewGroup vg =(ViewGroup)view.getParent().getParent();
                 ImageView  imgview = (ImageView) vg.getChildAt(0);
                 imgview.setImageResource(R.drawable.a1);
                 imgview.setTag("add");
-
             }
 
         }
@@ -105,6 +132,7 @@ public class DetailActivity extends Activity {
 
                     return;
             }
+
                 Order order = new Order(detail_id.getText().toString().trim(),
                         image_urls,
                         xiadan.getText().toString().trim(),
@@ -112,7 +140,18 @@ public class DetailActivity extends Activity {
                         queren.getText().toString().trim(),
                         detail_remark.getText().toString().trim()
                         );
-                orderArrayList.add(order);
+                if(intent.getIntExtra("index",-1)!=-1){
+                    orderArrayList.set(intent.getIntExtra("index",-1),order);
+
+                }else {
+                    orderArrayList.add(order);
+
+
+                }
+
+
+
+                setResult(200,intent);
                 finish();
 
                 break;
