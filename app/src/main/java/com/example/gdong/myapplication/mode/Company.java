@@ -1,10 +1,12 @@
 package com.example.gdong.myapplication.mode;
 
+import java.io.Serializable;
+
 /**
  * Created by Gdong on 2017/10/16.
  */
 
-public class Company {
+public class Company implements Serializable {
     private String id;
 
     public Company(String id, String name, String icon) {

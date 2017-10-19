@@ -2,4 +2,11 @@
 <resources>
     <item name="img1" type="id">10001</item>
     <item name="img2" type="id">10002</item>
+    <item name="img3" type="id">10003</item>
+    <item name="img4" type="id">10004</item>
+    <item name="img5" type="id">10005</item>
+    <item name="img6" type="id">10006</item>
+    <item name="img7" type="id">10007</item>
+    <item name="img8" type="id">10008</item>
+
 </resources>

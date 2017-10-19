@@ -19,22 +19,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         button= (Button) findViewById(R.id.main_select);
         editText = (EditText) findViewById(R.id.main_editText);
-        //linearLayout= (LinearLayout) findViewById(R.id.content);
-        //linearLayout.setBackgroundResource(R.drawable.main_background);
+        linearLayout= (LinearLayout) findViewById(R.id.content);
+        linearLayout.setBackgroundResource(R.drawable.main_background);
 
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (editText.getText().toString()!=null&&editText.getText().toString().equals("123456789") ){
+                if (editText.getText().toString()!=null&&editText.getText().toString().equals("123456789") ){
                     Intent intent= new Intent(MainActivity.this,CompanyListActivity.class);
                     startActivity(intent);
-//                }
-//                else {
-//                    Intent intent= new Intent(MainActivity.this,CusDetailActivity.class);
-//                    startActivity(intent);
-//
-//                }
+                }
+                else {
+                    Intent intent= new Intent(MainActivity.this,CusDetailActivity.class);
+                    startActivity(intent);
+
+                }
 
             }
         });

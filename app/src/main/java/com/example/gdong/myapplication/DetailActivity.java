@@ -3,6 +3,7 @@ package com.example.gdong.myapplication;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -12,10 +13,15 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.example.gdong.myapplication.extend.YeeDialog;
 import com.example.gdong.myapplication.mode.Order;
 import com.example.gdong.myapplication.ui.MyDialog;
@@ -24,8 +30,12 @@ import com.vondear.rxtools.view.dialog.RxDialog;
 import com.vondear.rxtools.view.dialog.RxDialogWheelYearMonthDay;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import static com.example.gdong.myapplication.MyApplication.REQUESTCODE_ADD;
 import static com.example.gdong.myapplication.MyApplication.REQUESTCODE_UPDATE;
@@ -40,8 +50,8 @@ public class DetailActivity extends Activity {
     private TextView jiaoqi;
     private TextView queren;
     private TextView detail_id;
-    private TextView detail_remark;
-    private ArrayList<String> image_urls;
+    private EditText detail_remark;
+    private HashMap<Integer,String> image_urls;
     private int image_index=0;
     private Bundle mbundle;
     private Calendar cal;
@@ -51,7 +61,7 @@ public class DetailActivity extends Activity {
     private Intent intent;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        image_urls =new ArrayList<String>(8);
+        image_urls =new HashMap<Integer,String>();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         getDate();
@@ -59,9 +69,8 @@ public class DetailActivity extends Activity {
         jiaoqi= (TextView) findViewById(R.id.detail_jiaoqi);
         queren= (TextView) findViewById(R.id.detail_queren);
         detail_id= (TextView) findViewById(R.id.detail_id);
-        detail_remark= (TextView) findViewById(R.id.detail_remark);
+        detail_remark= (EditText) findViewById(R.id.detail_remark);
         initData();
-
     }
 
 
@@ -69,16 +78,25 @@ public class DetailActivity extends Activity {
     public void initData(){
 
         intent= getIntent();
-        Log.i("1",intent.getIntExtra("index",-1)+"");
+
         Order order = (Order) intent.getSerializableExtra("data");
+        Log.i("order内容",order.toString());
         if(intent.getIntExtra("type",REQUESTCODE_ADD)==REQUESTCODE_ADD){
-            xiadan.setText("下单日期：");
-            jiaoqi.setText("交付日期：");
-            queren.setText("确认日期：");
+            xiadan.setText("");
+            jiaoqi.setText("");
+            queren.setText("");
             detail_id.setText("");
             detail_remark.setText("");
 
         }else {
+            image_urls=order.getImage_urls();
+            for(int i=R.id.img1;i<R.id.img1+8;i++){
+                if(order.getImage_urls().containsKey(i)){
+                   ImageView iv= (ImageView)findViewById(i);
+                   iv.setImageURI(Uri.parse(order.getImage_urls().get(i)));
+                   iv.setTag(i,"see");
+                }
+            }
             xiadan.setText(order.getDetail_xiadan());
             jiaoqi.setText(order.getDetail_jiaoqi());
             queren.setText(order.getDetail_queren());
@@ -103,12 +121,12 @@ public class DetailActivity extends Activity {
             Uri uri = Uri.fromFile(currentFile);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
             startActivityForResult(intent, 100);
-            image_index=0;
+            image_index=view.getId()-R.id.img1+1;;
 
-            }else if (view.getTag().toString().trim().equals("add_b")){
+            }else if (view.getTag().toString().trim().equals("see")){
                 Intent intent = new Intent();
                 mbundle= new Bundle();
-                mbundle.putStringArrayList("image_urls",image_urls);
+                mbundle.putSerializable("image_urls",(Serializable)image_urls);
                 mbundle.putInt("image_index",image_index);
                 intent.setClass(DetailActivity.this, ImgDetailActivity.class);
                 intent.putExtras(mbundle);
@@ -117,7 +135,7 @@ public class DetailActivity extends Activity {
                 ViewGroup vg =(ViewGroup)view.getParent().getParent();
                 ImageView  imgview = (ImageView) vg.getChildAt(0);
                 imgview.setImageResource(R.drawable.a1);
-                imgview.setTag("add");
+                imgview.setTag(id,"add");
             }
 
         }
@@ -132,7 +150,6 @@ public class DetailActivity extends Activity {
 
                     return;
             }
-
                 Order order = new Order(detail_id.getText().toString().trim(),
                         image_urls,
                         xiadan.getText().toString().trim(),
@@ -145,11 +162,7 @@ public class DetailActivity extends Activity {
 
                 }else {
                     orderArrayList.add(order);
-
-
                 }
-
-
 
                 setResult(200,intent);
                 finish();
@@ -198,8 +211,8 @@ public class DetailActivity extends Activity {
             switch (requestCode) {
                 case 100:
                     currentImageView.setImageURI(Uri.fromFile(currentFile));
-                    image_urls.add(currentFile.toString());
-                    currentImageView.setTag("add_b");
+                    image_urls.put(currentImageView.getId(),currentFile.toString());
+                    currentImageView.setTag(currentImageView.getId(),"see");
                     break;
 
 

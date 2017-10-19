@@ -2,6 +2,7 @@ package com.example.gdong.myapplication;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -25,6 +26,7 @@ import com.example.gdong.myapplication.ui.HackyViewPager;
 import com.github.chrisbanes.photoview.PhotoView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Gdong on 2017/9/26.
@@ -33,7 +35,7 @@ import java.util.ArrayList;
 public class ImgDetailActivity extends Activity {
 
     private static final String STATE_POSITION = "STATE_POSITION";
-    private ArrayList<String> image_urls;
+    private ArrayList<String> image_list;
     private int image_index;
     private LinearLayout ll_indicator;
     private ViewPager mPager;
@@ -44,12 +46,14 @@ public class ImgDetailActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_img_detail);
         mPager = (HackyViewPager) findViewById(R.id.pager);
-        image_urls = getIntent().getStringArrayListExtra("image_urls");
+        Intent intent = getIntent();
+        HashMap<String, String> message = (HashMap<String, String>) intent.getSerializableExtra("image_urls");
+        image_list= (ArrayList<String>) message.values();
         image_index = getIntent().getIntExtra("image_index",0);
         mPager.setAdapter(new SamplePagerAdapter());
         ll_indicator = (LinearLayout) findViewById(R.id.ll_indicator);
-        if (image_urls.size() > 1) {
-            addIndicator(image_urls, ll_indicator);
+        if (image_list.size() > 1) {
+            addIndicator(image_list, ll_indicator);
         }
         mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -78,7 +82,7 @@ public class ImgDetailActivity extends Activity {
 
         @Override
         public int getCount() {
-            return image_urls.size();
+            return image_list.size();
         }
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
@@ -98,7 +102,7 @@ public class ImgDetailActivity extends Activity {
                     finish();
                 }
             });
-            String mImageUrl = image_urls.get(position);
+            String mImageUrl = image_list.get(position);
             Log.i("1111",mImageUrl);
             Glide.with(ImgDetailActivity.this)
                     .load(mImageUrl)

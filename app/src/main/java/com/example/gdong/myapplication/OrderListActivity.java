@@ -1,7 +1,10 @@
 package com.example.gdong.myapplication;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +17,10 @@ import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.example.gdong.myapplication.mode.Company;
 import com.example.gdong.myapplication.mode.Order;
 
@@ -28,23 +35,47 @@ import static com.example.gdong.myapplication.MyApplication.REQUESTCODE_UPDATE;
  */
 
 public class OrderListActivity extends Activity{
-
-
-
-
-    ImageView iv_add;
-    SearchView iv_search;
+    private ImageView iv_add;
+    private SearchView iv_search;
     private RecyclerView mRecyclerView;
     private ArrayList<Order> mDatas = MyApplication.orderArrayList;
+    private ArrayList<Order> searchresult;
     private HomeAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        searchresult=mDatas;
         setContentView(R.layout.activity_result);
         iv_add= (ImageView) findViewById(R.id.add);
         iv_search= (SearchView) findViewById(R.id.search);
+        iv_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if(!newText.trim().equals("")) {
+                    searchresult = new ArrayList<>();
+                    for (int i = 0; i < mDatas.size(); i++) {
+                        if (mDatas.get(i).getId().contains(newText) || mDatas.get(i).getRemark().contains(newText)) {
+
+                            searchresult.add(mDatas.get(i));
+
+                        }
+
+                    }
+                    mAdapter.notifyDataSetChanged();
+                }else {
+                    searchresult=mDatas;
+                    mAdapter.notifyDataSetChanged();
+                }
+                return false;
+            }
+        });
 
         mRecyclerView = (RecyclerView) findViewById(R.id.review);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this,4));
@@ -66,6 +97,7 @@ public class OrderListActivity extends Activity{
         switch (id) {
             case R.id.add:
                 Intent intent = new Intent(OrderListActivity.this,DetailActivity.class);
+
                 intent.putExtra("data",new Order(null,null,"","","",null));
                 intent.putExtra("type",REQUESTCODE_ADD);
                 startActivityForResult(intent,REQUESTCODE_ADD);
@@ -96,9 +128,21 @@ public class OrderListActivity extends Activity{
         @Override
         public void onBindViewHolder(MyViewHolder holder, final int position)
         {
-            holder.tv1.setOnLongClickListener(new View.OnLongClickListener() {
+            holder.linearLayout.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
+                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(OrderListActivity.this);
+                    builder.setTitle("警告");
+                    builder.setMessage("确定要删除该订单信息？（操作不可撤销）");
+                    builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            searchresult.remove(position);
+                            notifyItemRemoved(position);
+                        }
+                    });
+                    builder.setNeutralButton("取消",null);
+                    builder.show();
                     return false;
                 }
             });
@@ -107,20 +151,46 @@ public class OrderListActivity extends Activity{
                 public void onClick(View v) {
                     Intent intent =new Intent(OrderListActivity.this,DetailActivity.class);
                     intent.putExtra("index",position);
-                    intent.putExtra("data",mDatas.get(position));
+                    intent.putExtra("data",searchresult.get(position));
                     intent.putExtra("type",REQUESTCODE_UPDATE);
                     startActivityForResult(intent,REQUESTCODE_UPDATE);
                 }
             });
-            holder.tv1.setText(mDatas.get(position).getId());
+            holder.tv1.setText(searchresult.get(position).getId());
+            boolean flag=false;
+            for (int i=R.id.img8;i>=R.id.img1;i--){
+                if(searchresult.get(position).getImage_urls().containsKey(i)){
+
+                    Glide.with(OrderListActivity.this)
+                            .load(searchresult.get(position).getImage_urls().get(i))
+                            .fitCenter()
+                            .into(new GlideDrawableImageViewTarget(holder.iv1) {
+                                @Override
+                                public void onLoadStarted(Drawable placeholder) {
+                                    super.onLoadStarted(placeholder);
+                                }
+                                @Override
+                                public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> animation) {
+                                    super.onResourceReady(resource, animation);
+                                }
+                            });
+                    flag=true;
+                    break;
+                }
+            }
+            if ( flag==false){
             holder.iv1.setImageResource(R.drawable.prompt);
+             }
+
+
+
 
         }
 
         @Override
         public int getItemCount()
         {
-            return mDatas.size();
+            return searchresult.size();
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder

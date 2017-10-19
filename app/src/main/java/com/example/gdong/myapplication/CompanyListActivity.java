@@ -2,9 +2,11 @@ package com.example.gdong.myapplication;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,20 +15,28 @@ import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.example.gdong.myapplication.mode.Company;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.gdong.myapplication.MyApplication.REQUESTCODE_ADD;
+import static com.example.gdong.myapplication.MyApplication.REQUESTCODE_ADD_SUCCESS;
 
 /**
  * Created by Gdong on 2017/8/28.
  */
 
 public class CompanyListActivity extends Activity {
-    ImageView iv_add;
-    SearchView iv_search;
+    private ImageView iv_add;
+    private SearchView iv_search;
+    private TextView detail_title;
     private RecyclerView mRecyclerView;
-    private ArrayList<Company> mDatas = MyApplication.companyArrayList;
+    public ArrayList<Company> companies = MyApplication.companyArrayList;
     private HomeAdapter mAdapter;
 
     @Override
@@ -36,8 +46,9 @@ public class CompanyListActivity extends Activity {
         setContentView(R.layout.activity_result);
         iv_add= (ImageView) findViewById(R.id.add);
         iv_search= (SearchView) findViewById(R.id.search);
-
+        detail_title= (TextView) findViewById(R.id.detail_title);
         initData();
+        detail_title.setText("公司列表");
         mRecyclerView = (RecyclerView) findViewById(R.id.review);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this,4));
         mRecyclerView.setAdapter(mAdapter = new HomeAdapter());
@@ -53,15 +64,20 @@ public class CompanyListActivity extends Activity {
         int id = view.getId();
         switch (id) {
             case R.id.add:
-                Intent intent = new Intent(CompanyListActivity.this,DetailActivity.class);
-                startActivity(intent);
+                Intent intent = new Intent(CompanyListActivity.this,NewCompany.class);
+                startActivityForResult(intent,REQUESTCODE_ADD);
                 break;
-
         }
     }
 
-
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode==REQUESTCODE_ADD_SUCCESS&&requestCode==REQUESTCODE_ADD){
+            companies.add((Company) data.getSerializableExtra("data"));
+        }
+        mAdapter.notifyDataSetChanged();
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>
     {
@@ -88,19 +104,49 @@ public class CompanyListActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     Intent intent =new Intent(CompanyListActivity.this,OrderListActivity.class);
-                    intent.putExtra("id",mDatas.get(position).getId());
+                    intent.putExtra("id",companies.get(position).getId());
                     startActivity(intent);
                 }
             });
+            Log.i("123",companies.get(position).getIcon());
+            if(!(companies.get(position).getIcon()==null||companies.get(position).getIcon()=="")){
+                Glide.with(CompanyListActivity.this)
+                        .load(companies.get(position).getIcon())
+                        .fitCenter()
+                        .into(new GlideDrawableImageViewTarget(holder.iv1) {
+                            @Override
+                            public void onLoadStarted(Drawable placeholder) {
+                                super.onLoadStarted(placeholder);
+                            }
+                            @Override
+                            public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> animation) {
+                                super.onResourceReady(resource, animation);
+                            }
+                        });
 
+            }else {
+                Glide.with(CompanyListActivity.this)
+                        .load(R.drawable.company)
+                        .fitCenter()
+                        .into(new GlideDrawableImageViewTarget(holder.iv1) {
+                            @Override
+                            public void onLoadStarted(Drawable placeholder) {
+                                super.onLoadStarted(placeholder);
+                            }
+                            @Override
+                            public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> animation) {
+                                super.onResourceReady(resource, animation);
+                            }
+                        });
 
-            holder.tv1.setText(mDatas.get(position).getName());
+            }
+            holder.tv1.setText(companies.get(position).getName());
         }
 
         @Override
         public int getItemCount()
         {
-            return mDatas.size();
+            return companies.size();
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder

@@ -1,6 +1,10 @@
 package com.example.gdong.myapplication.ui;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.view.View;
+
+import javax.security.auth.callback.Callback;
 
 /**
  * Created by Gdong on 2017/10/17.
@@ -14,6 +18,7 @@ public class MyDialog {
         builder.setNegativeButton("确定", null);
         builder.show();
     }
+
 
 
 }

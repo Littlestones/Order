@@ -13,7 +13,7 @@
         android:label="Tests for com.github.chrisbanes.photoview.test"
         android:targetPackage="com.github.chrisbanes.photoview.test" />
 
-    <application>
+    <application android:debuggable="true" >
         <uses-library android:name="android.test.runner" />
     </application>
 

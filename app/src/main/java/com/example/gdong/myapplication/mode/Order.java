@@ -3,6 +3,7 @@ package com.example.gdong.myapplication.mode;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * Created by Gdong on 2017/10/16.
@@ -10,7 +11,7 @@ import java.util.Date;
 
 public class Order  implements Serializable{
     private String id;
-    private ArrayList<String> image_urls;
+    private HashMap<Integer,String> image_urls;
     private String detail_xiadan;
     private String detail_jiaoqi;
     private String detail_queren;
@@ -20,7 +21,7 @@ public class Order  implements Serializable{
         return id;
     }
 
-    public Order(String id, ArrayList<String> image_urls, String detail_xiadan, String detail_jiaoqi, String detail_queren, String remark) {
+    public Order(String id, HashMap<Integer,String> image_urls, String detail_xiadan, String detail_jiaoqi, String detail_queren, String remark) {
         this.id = id;
         this.image_urls = image_urls;
         this.detail_xiadan = detail_xiadan;
@@ -45,11 +46,11 @@ public class Order  implements Serializable{
         this.id = id;
     }
 
-    public ArrayList<String> getImage_urls() {
+    public HashMap<Integer,String> getImage_urls() {
         return image_urls;
     }
 
-    public void setImage_urls(ArrayList<String> image_urls) {
+    public void setImage_urls(HashMap<Integer,String> image_urls) {
         this.image_urls = image_urls;
     }
 
