@@ -27,6 +27,10 @@ import com.example.gdong.myapplication.mode.Order;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+
 import static com.example.gdong.myapplication.MyApplication.REQUESTCODE_ADD;
 import static com.example.gdong.myapplication.MyApplication.REQUESTCODE_UPDATE;
 
@@ -38,14 +42,16 @@ public class OrderListActivity extends Activity{
     private ImageView iv_add;
     private SearchView iv_search;
     private RecyclerView mRecyclerView;
-    private ArrayList<Order> mDatas = MyApplication.orderArrayList;
-    private ArrayList<Order> searchresult;
+    private List<Order> mDatas = null;
+    private List<Order> searchresult;
     private HomeAdapter mAdapter;
+    private String companyobjectid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        companyobjectid=getIntent().getStringExtra("ObjectId");
         searchresult=mDatas;
         setContentView(R.layout.activity_result);
         iv_add= (ImageView) findViewById(R.id.add);
@@ -55,18 +61,14 @@ public class OrderListActivity extends Activity{
             public boolean onQueryTextSubmit(String query) {
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String newText) {
                 if(!newText.trim().equals("")) {
                     searchresult = new ArrayList<>();
                     for (int i = 0; i < mDatas.size(); i++) {
                         if (mDatas.get(i).getId().contains(newText) || mDatas.get(i).getRemark().contains(newText)) {
-
                             searchresult.add(mDatas.get(i));
-
                         }
-
                     }
                     mAdapter.notifyDataSetChanged();
                 }else {
@@ -83,11 +85,23 @@ public class OrderListActivity extends Activity{
 
 
     }
+    public  void initData(String companyobjectid){
+        BmobQuery<Order> query = new BmobQuery<Order>();
+        query.setLimit(50);
+        query.addWhereEqualTo("company", companyobjectid);
+        query.findObjects(new FindListener<Order>() {
+            @Override
+            public void done(List<Order> list, BmobException e) {
+                if(e==null){
+                    mDatas=list;
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+        });
 
+    }
     @Override
     protected void onResume() {
-        mDatas = MyApplication.orderArrayList;
-
         mAdapter.notifyDataSetChanged();
         super.onResume();
     }
@@ -98,7 +112,7 @@ public class OrderListActivity extends Activity{
             case R.id.add:
                 Intent intent = new Intent(OrderListActivity.this,DetailActivity.class);
 
-                intent.putExtra("data",new Order(null,null,"","","",null));
+                intent.putExtra("data",new Order(null,null,"","","",null,companyobjectid));
                 intent.putExtra("type",REQUESTCODE_ADD);
                 startActivityForResult(intent,REQUESTCODE_ADD);
                 break;
@@ -150,8 +164,8 @@ public class OrderListActivity extends Activity{
                 @Override
                 public void onClick(View v) {
                     Intent intent =new Intent(OrderListActivity.this,DetailActivity.class);
-                    intent.putExtra("index",position);
-                    intent.putExtra("data",searchresult.get(position));
+                    intent.putExtra("companyid",companyobjectid);
+                    intent.putExtra("ObjectId",searchresult.get(position).getObjectId());
                     intent.putExtra("type",REQUESTCODE_UPDATE);
                     startActivityForResult(intent,REQUESTCODE_UPDATE);
                 }
@@ -190,7 +204,7 @@ public class OrderListActivity extends Activity{
         @Override
         public int getItemCount()
         {
-            return searchresult.size();
+            return 0;
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder

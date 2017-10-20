@@ -3,6 +3,7 @@ package com.example.gdong.myapplication;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,8 +25,13 @@ import com.example.gdong.myapplication.mode.Company;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+
 import static com.example.gdong.myapplication.MyApplication.REQUESTCODE_ADD;
 import static com.example.gdong.myapplication.MyApplication.REQUESTCODE_ADD_SUCCESS;
+import static com.example.gdong.myapplication.MyApplication.companyArrayList;
 
 /**
  * Created by Gdong on 2017/8/28.
@@ -36,7 +42,7 @@ public class CompanyListActivity extends Activity {
     private SearchView iv_search;
     private TextView detail_title;
     private RecyclerView mRecyclerView;
-    public ArrayList<Company> companies = MyApplication.companyArrayList;
+    public List<Company> companies =companyArrayList ;
     private HomeAdapter mAdapter;
 
     @Override
@@ -52,12 +58,28 @@ public class CompanyListActivity extends Activity {
         mRecyclerView = (RecyclerView) findViewById(R.id.review);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this,4));
         mRecyclerView.setAdapter(mAdapter = new HomeAdapter());
+    }
 
-
+    @Override
+    protected void onResume() {
+        initData();
+        super.onResume();
     }
 
     protected void initData()
     {
+        BmobQuery<Company> query = new BmobQuery<Company>();
+        query.setLimit(50);
+        query.findObjects(new FindListener<Company>() {
+            @Override
+            public void done(List<Company> list, BmobException e) {
+                if(e==null){
+                    companies=list;
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+
     }
 
     public void click(View view) {
@@ -73,7 +95,7 @@ public class CompanyListActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode==REQUESTCODE_ADD_SUCCESS&&requestCode==REQUESTCODE_ADD){
-            companies.add((Company) data.getSerializableExtra("data"));
+            initData();
         }
         mAdapter.notifyDataSetChanged();
         super.onActivityResult(requestCode, resultCode, data);
@@ -104,14 +126,14 @@ public class CompanyListActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     Intent intent =new Intent(CompanyListActivity.this,OrderListActivity.class);
-                    intent.putExtra("id",companies.get(position).getId());
+                    intent.putExtra("ObjectId",companies.get(position).getObjectId());
                     startActivity(intent);
                 }
             });
-            Log.i("123",companies.get(position).getIcon());
+                Log.i("123",companies.get(position).getIcon());
             if(!(companies.get(position).getIcon()==null||companies.get(position).getIcon()=="")){
                 Glide.with(CompanyListActivity.this)
-                        .load(companies.get(position).getIcon())
+                        .load(Uri.parse(companies.get(position).getIcon()))
                         .fitCenter()
                         .into(new GlideDrawableImageViewTarget(holder.iv1) {
                             @Override

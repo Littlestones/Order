@@ -279,6 +279,8 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
+                    android:id="@+id/detail_xiadan_clickarea"
+                    android:onClick="click"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp">
@@ -304,6 +306,8 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/detail_jiaoqi_clickarea"
+                    android:onClick="click"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp">
@@ -329,6 +333,8 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/detail_queren_clickarea"
+                    android:onClick="click"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp">

@@ -12,21 +12,32 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.example.gdong.myapplication.mode.Company;
+import com.example.gdong.myapplication.util.network;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
 
+import java.io.File;
 import java.util.List;
 
 
+import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UploadFileListener;
+
+import static cn.bmob.v3.Bmob.getApplicationContext;
 import static com.example.gdong.myapplication.MyApplication.REQUESTCODE_ADD;
 import static com.example.gdong.myapplication.MyApplication.REQUESTCODE_ADD_SUCCESS;
+import static com.example.gdong.myapplication.util.ContentUriUtil.getPath;
+import static org.csii.yeeframe.ui.ViewInject.toast;
 
 /**
  * Created by Gdong on 2017/10/19.
@@ -68,10 +79,27 @@ public class NewCompany extends Activity {
                         companyname.getText().toString().trim(),
                         mSelected.get(0).toString()
                         );
-                Intent intent =getIntent();
-                intent.putExtra("data",company);
-                setResult(REQUESTCODE_ADD_SUCCESS,intent);
-                finish();
+
+                final BmobFile bmobFile = new BmobFile(new File(getPath(this, mSelected.get(0))));
+                bmobFile.uploadblock(new UploadFileListener() {
+                    @Override
+                    public void done(BmobException e) {
+                        if (e == null) {
+                            Toast.makeText(getApplicationContext(), "图片上传成功", Toast.LENGTH_SHORT);
+                            company.setIcon(bmobFile.getFileUrl());
+                            company.save(new SaveListener() {
+                                @Override
+                                public void done(Object o, BmobException e) {
+                                    Toast.makeText(NewCompany.this,"上传成功",Toast.LENGTH_SHORT);
+                                    finish();
+                                }
+                            });
+                        } else {
+                            Toast.makeText(getApplicationContext(), "图片上传失败", Toast.LENGTH_SHORT);
+                            company.setIcon("");
+                        }
+                    }
+                });
                 break;
             case R.id.new_company_cancel:
                 finish();

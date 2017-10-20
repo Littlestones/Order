@@ -37,6 +37,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
+
 import static com.example.gdong.myapplication.MyApplication.REQUESTCODE_ADD;
 import static com.example.gdong.myapplication.MyApplication.REQUESTCODE_UPDATE;
 import static com.example.gdong.myapplication.MyApplication.orderArrayList;
@@ -59,9 +62,14 @@ public class DetailActivity extends Activity {
     private File currentFile;
     private ImageView currentImageView;
     private Intent intent;
+    private String companyobjectid;
+    private String orderobjectid;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         image_urls =new HashMap<Integer,String>();
+        companyobjectid=getIntent().getStringExtra("companyid");
+        orderobjectid=getIntent().getStringExtra("ObjectId");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         getDate();
@@ -147,7 +155,6 @@ public class DetailActivity extends Activity {
             case R.id.detail_save:
                 if(detail_id.getText().toString().trim().equals("")){
                     new MyDialog(this,"请输入订单编号");
-
                     return;
             }
                 Order order = new Order(detail_id.getText().toString().trim(),
@@ -155,20 +162,20 @@ public class DetailActivity extends Activity {
                         xiadan.getText().toString().trim(),
                         jiaoqi.getText().toString().trim(),
                         queren.getText().toString().trim(),
-                        detail_remark.getText().toString().trim()
+                        detail_remark.getText().toString().trim(),
+                        companyobjectid
                         );
-                if(intent.getIntExtra("index",-1)!=-1){
-                    orderArrayList.set(intent.getIntExtra("index",-1),order);
+                order.save(new SaveListener<String>() {
+                    @Override
+                    public void done(String s, BmobException e) {
+                        setResult(200,intent);
+                        finish();
 
-                }else {
-                    orderArrayList.add(order);
-                }
-
-                setResult(200,intent);
-                finish();
+                    }
+                });
 
                 break;
-            case R.id.detail_xiadan:
+            case R.id.detail_xiadan_clickarea:
                 DatePickerDialog.OnDateSetListener listener=new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker arg0, int year, int month, int day) {
@@ -178,7 +185,7 @@ public class DetailActivity extends Activity {
                 DatePickerDialog dialog=new DatePickerDialog(DetailActivity.this, 0,listener,year,month,day);
                 dialog.show();
                 break;
-            case R.id.detail_jiaoqi:
+            case R.id.detail_jiaoqi_clickarea:
                 DatePickerDialog.OnDateSetListener listener2=new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker arg0, int year, int month, int day) {
@@ -188,7 +195,7 @@ public class DetailActivity extends Activity {
                 DatePickerDialog dialog2=new DatePickerDialog(DetailActivity.this, 0,listener2,year,month,day);
                 dialog2.show();
                 break;
-            case R.id.detail_queren:
+            case R.id.detail_queren_clickarea:
                 DatePickerDialog.OnDateSetListener listener3=new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker arg0, int year, int month, int day) {

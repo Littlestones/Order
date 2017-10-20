@@ -2,11 +2,13 @@ package com.example.gdong.myapplication.mode;
 
 import java.io.Serializable;
 
+import cn.bmob.v3.BmobObject;
+
 /**
  * Created by Gdong on 2017/10/16.
  */
 
-public class Company implements Serializable {
+public class Company  extends BmobObject implements Serializable {
     private String id;
 
     public Company(String id, String name, String icon) {
