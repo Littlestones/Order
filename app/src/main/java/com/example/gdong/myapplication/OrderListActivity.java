@@ -52,7 +52,7 @@ public class OrderListActivity extends Activity{
     {
         super.onCreate(savedInstanceState);
         companyobjectid=getIntent().getStringExtra("ObjectId");
-        searchresult=mDatas;
+        initData(companyobjectid);
         setContentView(R.layout.activity_result);
         iv_add= (ImageView) findViewById(R.id.add);
         iv_search= (SearchView) findViewById(R.id.search);
@@ -78,23 +78,27 @@ public class OrderListActivity extends Activity{
                 return false;
             }
         });
-
         mRecyclerView = (RecyclerView) findViewById(R.id.review);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this,4));
-        mRecyclerView.setAdapter(mAdapter = new HomeAdapter());
+        mRecyclerView.setLayoutManager(new GridLayoutManager(OrderListActivity.this,4));
 
 
     }
     public  void initData(String companyobjectid){
         BmobQuery<Order> query = new BmobQuery<Order>();
         query.setLimit(50);
-        query.addWhereEqualTo("company", companyobjectid);
+        query.addWhereEqualTo("companyid", companyobjectid);
         query.findObjects(new FindListener<Order>() {
             @Override
             public void done(List<Order> list, BmobException e) {
                 if(e==null){
                     mDatas=list;
+                    searchresult=mDatas;
+                    mRecyclerView.setAdapter(mAdapter = new HomeAdapter());
                     mAdapter.notifyDataSetChanged();
+                }else {
+                    mRecyclerView.setAdapter(mAdapter = new HomeAdapter());
+                    mAdapter.notifyDataSetChanged();
+
                 }
             }
         });
@@ -102,7 +106,6 @@ public class OrderListActivity extends Activity{
     }
     @Override
     protected void onResume() {
-        mAdapter.notifyDataSetChanged();
         super.onResume();
     }
 
@@ -111,19 +114,18 @@ public class OrderListActivity extends Activity{
         switch (id) {
             case R.id.add:
                 Intent intent = new Intent(OrderListActivity.this,DetailActivity.class);
-
-                intent.putExtra("data",new Order(null,null,"","","",null,companyobjectid));
-                intent.putExtra("type",REQUESTCODE_ADD);
+                Bundle  bundle =new Bundle();
+                bundle.putString("companyid",companyobjectid);
+                bundle.putInt("type",REQUESTCODE_ADD);
+                intent.putExtras(bundle);
                 startActivityForResult(intent,REQUESTCODE_ADD);
                 break;
-
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-
+        initData(companyobjectid);
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -164,16 +166,18 @@ public class OrderListActivity extends Activity{
                 @Override
                 public void onClick(View v) {
                     Intent intent =new Intent(OrderListActivity.this,DetailActivity.class);
-                    intent.putExtra("companyid",companyobjectid);
-                    intent.putExtra("ObjectId",searchresult.get(position).getObjectId());
-                    intent.putExtra("type",REQUESTCODE_UPDATE);
+                    Bundle  bundle =new Bundle();
+                    bundle.putString("companyid",companyobjectid);
+                    bundle.putString("ObjectId",searchresult.get(position).getObjectId());
+                    bundle.putInt("type",REQUESTCODE_UPDATE);
+                    intent.putExtras(bundle);
                     startActivityForResult(intent,REQUESTCODE_UPDATE);
                 }
             });
             holder.tv1.setText(searchresult.get(position).getId());
             boolean flag=false;
-            for (int i=R.id.img8;i>=R.id.img1;i--){
-                if(searchresult.get(position).getImage_urls().containsKey(i)){
+            for (int i=7;i>=0;i--){
+                if(searchresult.get(position).getImage_urls().get(i)!=null){
 
                     Glide.with(OrderListActivity.this)
                             .load(searchresult.get(position).getImage_urls().get(i))
@@ -196,16 +200,19 @@ public class OrderListActivity extends Activity{
             holder.iv1.setImageResource(R.drawable.prompt);
              }
 
-
-
-
         }
 
         @Override
         public int getItemCount()
         {
-            return 0;
-        }
+            if (searchresult==null)
+            {
+                return 0;
+            }else {
+                return searchresult.size();
+            }
+            }
+
 
         class MyViewHolder extends RecyclerView.ViewHolder
         {

@@ -55,9 +55,9 @@ public class CusDetailActivity extends Activity{
 
         boolean flag=false;
         for (int i=R.id.img8;i>=R.id.img1;i--){
-            if(order.getImage_urls().containsKey(i)){
+            if(order.getImage_urls().get(i-R.id.img1)!=null){
                 Glide.with(CusDetailActivity.this)
-                        .load(order.getImage_urls().get(i))
+                        .load(order.getImage_urls().get(i-R.id.img1))
                         .fitCenter()
                         .into(new GlideDrawableImageViewTarget(cusdetail_img) {
                             @Override

@@ -35,7 +35,6 @@ public class network {
             return null;
         }else {
             return bmobFile.getFileUrl().toString() ;
-
         }
     }
 }

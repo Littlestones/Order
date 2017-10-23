@@ -3,10 +3,13 @@ package com.example.gdong.myapplication;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -15,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +32,9 @@ import com.example.gdong.myapplication.ui.MyDialog;
 import com.vondear.rxtools.RxCameraUtils;
 import com.vondear.rxtools.view.dialog.RxDialog;
 import com.vondear.rxtools.view.dialog.RxDialogWheelYearMonthDay;
+import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.engine.impl.GlideEngine;
 
 import java.io.File;
 import java.io.Serializable;
@@ -35,31 +42,39 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UploadFileListener;
 
 import static com.example.gdong.myapplication.MyApplication.REQUESTCODE_ADD;
 import static com.example.gdong.myapplication.MyApplication.REQUESTCODE_UPDATE;
 import static com.example.gdong.myapplication.MyApplication.orderArrayList;
+import static com.example.gdong.myapplication.util.ContentUriUtil.getPath;
 
 /**
  * Created by Gdong on 2017/8/28.
  */
 
 public class DetailActivity extends Activity {
+    List<Uri> mSelected;
     private TextView xiadan;
     private TextView jiaoqi;
     private TextView queren;
     private TextView detail_id;
     private EditText detail_remark;
-    private HashMap<Integer,String> image_urls;
+    private List<String> image_urls;
+    private List<String> image_urls_cdn;
     private int image_index=0;
     private Bundle mbundle;
     private Calendar cal;
     private int year,month,day;
-    private File currentFile;
     private ImageView currentImageView;
     private Intent intent;
     private String companyobjectid;
@@ -67,9 +82,13 @@ public class DetailActivity extends Activity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        image_urls =new HashMap<Integer,String>();
-        companyobjectid=getIntent().getStringExtra("companyid");
-        orderobjectid=getIntent().getStringExtra("ObjectId");
+        image_urls=new ArrayList();
+        image_urls_cdn=new ArrayList();
+        for(int i=0;i<8;i++){
+            image_urls.add("");
+        }
+        companyobjectid=getIntent().getExtras().getString("companyid");
+        orderobjectid=getIntent().getExtras().getString("ObjectId");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         getDate();
@@ -82,13 +101,8 @@ public class DetailActivity extends Activity {
     }
 
 
-
     public void initData(){
-
         intent= getIntent();
-
-        Order order = (Order) intent.getSerializableExtra("data");
-        Log.i("order内容",order.toString());
         if(intent.getIntExtra("type",REQUESTCODE_ADD)==REQUESTCODE_ADD){
             xiadan.setText("");
             jiaoqi.setText("");
@@ -97,19 +111,62 @@ public class DetailActivity extends Activity {
             detail_remark.setText("");
 
         }else {
-            image_urls=order.getImage_urls();
-            for(int i=R.id.img1;i<R.id.img1+8;i++){
-                if(order.getImage_urls().containsKey(i)){
-                   ImageView iv= (ImageView)findViewById(i);
-                   iv.setImageURI(Uri.parse(order.getImage_urls().get(i)));
-                   iv.setTag(i,"see");
+            BmobQuery<Order> bmobQuery = new BmobQuery<Order>();
+            bmobQuery.getObject(orderobjectid, new QueryListener<Order>() {
+                @Override
+                public void done(Order object,BmobException e) {
+                    if(e==null){
+                        Order order=object;
+                        image_urls=order.getImage_urls();
+                        for(int i=R.id.img1;i<R.id.img1+8;i++){
+                            if(!(image_urls.get(i-R.id.img1)==null||image_urls.get(i-R.id.img1).equals("")))
+                            {
+                                ImageView iv= (ImageView)findViewById(i);
+                                Glide.with(DetailActivity.this)
+                                        .load(order.getImage_urls().get(i-R.id.img1))
+                                        .fitCenter()
+                                        .into(new GlideDrawableImageViewTarget(iv) {
+                                            @Override
+                                            public void onLoadStarted(Drawable placeholder) {
+                                                super.onLoadStarted(placeholder);
+                                            }
+                                            @Override
+                                            public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> animation) {
+                                                super.onResourceReady(resource, animation);
+                                            }
+                                        });
+                                iv.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        seeimg(v);
+                                    }
+                                });
+
+                                //iv.setTag(i,"see");
+                            }
+                            else {
+                                ImageView iv= (ImageView)findViewById(i);
+                                iv.setImageResource(R.drawable.a1);
+                                iv.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        chooseimg(v);
+
+                                    }
+                                });
+                              //  iv.setTag(i,"add");
+                            }
+                        }
+                        xiadan.setText(order.getDetail_xiadan());
+                        jiaoqi.setText(order.getDetail_jiaoqi());
+                        queren.setText(order.getDetail_queren());
+                        detail_id.setText(order.getId());
+                        detail_remark.setText(order.getRemark());
+                    }else{
+                    }
                 }
-            }
-            xiadan.setText(order.getDetail_xiadan());
-            jiaoqi.setText(order.getDetail_jiaoqi());
-            queren.setText(order.getDetail_queren());
-            detail_id.setText(order.getId());
-            detail_remark.setText(order.getRemark());
+            });
+
         }
 
 
@@ -120,30 +177,16 @@ public class DetailActivity extends Activity {
     public void click(View view){
         int id= view.getId();
         if(view instanceof ImageView){
-            if(view.getTag().toString().trim().equals("add")){
-            currentImageView = (ImageView) view;
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            currentFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
-                    + "/test/" + System.currentTimeMillis() + ".jpg");
-            currentFile.getParentFile().mkdirs();
-            Uri uri = Uri.fromFile(currentFile);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-            startActivityForResult(intent, 100);
-            image_index=view.getId()-R.id.img1+1;;
-
-            }else if (view.getTag().toString().trim().equals("see")){
-                Intent intent = new Intent();
-                mbundle= new Bundle();
-                mbundle.putSerializable("image_urls",(Serializable)image_urls);
-                mbundle.putInt("image_index",image_index);
-                intent.setClass(DetailActivity.this, ImgDetailActivity.class);
-                intent.putExtras(mbundle);
-                startActivity(intent);
-            }else {
+            if(!(view.getId()<=R.id.img8&&view.getId()>=R.id.img1)){
                 ViewGroup vg =(ViewGroup)view.getParent().getParent();
                 ImageView  imgview = (ImageView) vg.getChildAt(0);
                 imgview.setImageResource(R.drawable.a1);
-                imgview.setTag(id,"add");
+                imgview.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        chooseimg(v);
+                    }
+                });
             }
 
         }
@@ -157,20 +200,17 @@ public class DetailActivity extends Activity {
                     new MyDialog(this,"请输入订单编号");
                     return;
             }
-                Order order = new Order(detail_id.getText().toString().trim(),
-                        image_urls,
-                        xiadan.getText().toString().trim(),
-                        jiaoqi.getText().toString().trim(),
-                        queren.getText().toString().trim(),
-                        detail_remark.getText().toString().trim(),
-                        companyobjectid
-                        );
-                order.save(new SaveListener<String>() {
+                BmobQuery<Order> bmobQuery = new BmobQuery<Order>();
+                bmobQuery.addWhereEqualTo("id", id);
+                bmobQuery.findObjects(new FindListener<Order>() {
                     @Override
-                    public void done(String s, BmobException e) {
-                        setResult(200,intent);
-                        finish();
-
+                    public void done(List<Order> list, BmobException e) {
+                        if (e == null) {
+                            new MyDialog(DetailActivity.this, "已经存在相同编号的订单，请重新输入。");
+                            return;
+                        } else {
+                            upLoadImgList();
+                        }
                     }
                 });
 
@@ -205,9 +245,6 @@ public class DetailActivity extends Activity {
                 DatePickerDialog dialog3=new DatePickerDialog(DetailActivity.this, 0,listener3,year,month,day);
                 dialog3.show();
                 break;
-
-
-
         }
 
     }
@@ -217,12 +254,17 @@ public class DetailActivity extends Activity {
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case 100:
-                    currentImageView.setImageURI(Uri.fromFile(currentFile));
-                    image_urls.put(currentImageView.getId(),currentFile.toString());
-                    currentImageView.setTag(currentImageView.getId(),"see");
+                    mSelected = Matisse.obtainResult(data);
+                    currentImageView.setImageURI(mSelected.get(0));
+                    image_urls.set(currentImageView.getId()-R.id.img1,mSelected.get(0).toString());
+                    currentImageView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            seeimg(v);
+                        }
+                    });
+                 //   currentImageView.setTag(currentImageView.getId(),"see");
                     break;
-
-
             }
         }
     }
@@ -232,4 +274,69 @@ public class DetailActivity extends Activity {
         month=cal.get(Calendar.MONTH);   //获取到的月份是从0开始计数
         day=cal.get(Calendar.DAY_OF_MONTH);
     }
+    private void upLoadImgList(){
+        for( int i = 0;i<8;i++){
+            if (!(image_urls.get(i).equals("")||image_urls.get(i)==null)) {
+                final BmobFile bmobFile = new BmobFile(new File(getPath(this, Uri.parse(image_urls.get(i)))));
+                bmobFile.uploadblock(new UploadFileListener() {
+                    @Override
+                    public void done(BmobException e) {
+                        if (e == null) {
+                            image_urls_cdn.add(bmobFile.getUrl());
+                            if (image_urls_cdn.size()==8){
+                                upLoadOrder();
+                            }
+                        } else {
+                            Log.i("info","上传失败"+e.toString());
+
+                        }
+                    }
+                });
+            }else{
+                image_urls_cdn.add("");
+            }
+        }
+    }
+    private void upLoadOrder(){
+        Order order = new Order(detail_id.getText().toString().trim(),
+                image_urls_cdn,
+                xiadan.getText().toString().trim(),
+                jiaoqi.getText().toString().trim(),
+                queren.getText().toString().trim(),
+                detail_remark.getText().toString().trim(),
+                companyobjectid
+        );
+        order.save(new SaveListener<String>() {
+            @Override
+            public void done(String s, BmobException e) {
+                setResult(200,intent);
+                finish();
+
+            }
+        });
+
+    }
+    private void chooseimg(View view){
+        currentImageView= (ImageView) view;
+        Matisse.from(DetailActivity.this)
+                .choose(MimeType.allOf()) // 选择 mime 的类型
+                .countable(true)
+                .maxSelectable(1) // 图片选择的最多数量
+                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                .thumbnailScale(0.85f) // 缩略图的比例
+                .imageEngine(new GlideEngine()) // 使用的图片加载引擎
+                .forResult(100); // 设置作为标记的请求码
+        image_index=view.getId()-R.id.img1+1;;
+    }
+    private void seeimg(View view){
+        Intent intent = new Intent();
+        mbundle= new Bundle();
+        mbundle.putSerializable("image_urls",(Serializable)image_urls);
+        mbundle.putInt("image_index",image_index);
+        intent.setClass(DetailActivity.this, ImgDetailActivity.class);
+        intent.putExtras(mbundle);
+        startActivity(intent);
+    }
+
+
 }

@@ -81,9 +81,9 @@ public class NewCompany extends Activity {
                         );
 
                 final BmobFile bmobFile = new BmobFile(new File(getPath(this, mSelected.get(0))));
-                bmobFile.uploadblock(new UploadFileListener() {
-                    @Override
-                    public void done(BmobException e) {
+                        bmobFile.uploadblock(new UploadFileListener() {
+                            @Override
+                            public void done(BmobException e) {
                         if (e == null) {
                             Toast.makeText(getApplicationContext(), "图片上传成功", Toast.LENGTH_SHORT);
                             company.setIcon(bmobFile.getFileUrl());
@@ -127,7 +127,6 @@ public class NewCompany extends Activity {
                             super.onResourceReady(resource, animation);
                         }
                     });
-            Log.d("Matisse", "mSelected: " + mSelected);
         }
     }
 }
