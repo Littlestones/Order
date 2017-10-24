@@ -51,6 +51,7 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
 import static com.example.gdong.myapplication.MyApplication.REQUESTCODE_ADD;
@@ -79,6 +80,7 @@ public class DetailActivity extends Activity {
     private Intent intent;
     private String companyobjectid;
     private String orderobjectid;
+    private int type;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -89,6 +91,7 @@ public class DetailActivity extends Activity {
         }
         companyobjectid=getIntent().getExtras().getString("companyid");
         orderobjectid=getIntent().getExtras().getString("ObjectId");
+        type=getIntent().getExtras().getInt("type");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         getDate();
@@ -103,12 +106,24 @@ public class DetailActivity extends Activity {
 
     public void initData(){
         intent= getIntent();
-        if(intent.getIntExtra("type",REQUESTCODE_ADD)==REQUESTCODE_ADD){
+        if(type==REQUESTCODE_ADD){
             xiadan.setText("");
             jiaoqi.setText("");
             queren.setText("");
             detail_id.setText("");
             detail_remark.setText("");
+            for(int i=R.id.img1;i<R.id.img1+8;i++){
+                ImageView iv= (ImageView)findViewById(i);
+                iv.setImageResource(R.drawable.a1);
+                iv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        chooseimg(v);
+                    }
+                });
+
+            }
+
 
         }else {
             BmobQuery<Order> bmobQuery = new BmobQuery<Order>();
@@ -151,7 +166,6 @@ public class DetailActivity extends Activity {
                                     @Override
                                     public void onClick(View v) {
                                         chooseimg(v);
-
                                     }
                                 });
                               //  iv.setTag(i,"add");
@@ -200,12 +214,17 @@ public class DetailActivity extends Activity {
                     new MyDialog(this,"请输入订单编号");
                     return;
             }
+            if(type==REQUESTCODE_UPDATE){
+                upLoadImgList();
+            }else {
+                Log.i("type",type+"");
                 BmobQuery<Order> bmobQuery = new BmobQuery<Order>();
-                bmobQuery.addWhereEqualTo("id", id);
+                bmobQuery.addWhereEqualTo("id", detail_id.getText().toString().trim());
                 bmobQuery.findObjects(new FindListener<Order>() {
                     @Override
                     public void done(List<Order> list, BmobException e) {
-                        if (e == null) {
+                        if (e == null&&list.size()!=0) {
+                            Log.i("list",list.toString());
                             new MyDialog(DetailActivity.this, "已经存在相同编号的订单，请重新输入。");
                             return;
                         } else {
@@ -213,13 +232,14 @@ public class DetailActivity extends Activity {
                         }
                     }
                 });
+            }
 
                 break;
             case R.id.detail_xiadan_clickarea:
                 DatePickerDialog.OnDateSetListener listener=new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker arg0, int year, int month, int day) {
-                        xiadan.setText("下单日期："+year+"-"+(++month)+"-"+day);      //将选择的日期显示到TextView中,因为之前获取month直接使用，所以不需要+1，这个地方需要显示，所以+1
+                        xiadan.setText(+year+"-"+(++month)+"-"+day);      //将选择的日期显示到TextView中,因为之前获取month直接使用，所以不需要+1，这个地方需要显示，所以+1
                     }
                 };
                 DatePickerDialog dialog=new DatePickerDialog(DetailActivity.this, 0,listener,year,month,day);
@@ -229,7 +249,7 @@ public class DetailActivity extends Activity {
                 DatePickerDialog.OnDateSetListener listener2=new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker arg0, int year, int month, int day) {
-                        jiaoqi.setText("交付日期："+year+"-"+(++month)+"-"+day);      //将选择的日期显示到TextView中,因为之前获取month直接使用，所以不需要+1，这个地方需要显示，所以+1
+                        jiaoqi.setText(+year+"-"+(++month)+"-"+day);      //将选择的日期显示到TextView中,因为之前获取month直接使用，所以不需要+1，这个地方需要显示，所以+1
                     }
                 };
                 DatePickerDialog dialog2=new DatePickerDialog(DetailActivity.this, 0,listener2,year,month,day);
@@ -239,7 +259,7 @@ public class DetailActivity extends Activity {
                 DatePickerDialog.OnDateSetListener listener3=new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker arg0, int year, int month, int day) {
-                        queren.setText("确认日期："+year+"-"+(++month)+"-"+day);      //将选择的日期显示到TextView中,因为之前获取month直接使用，所以不需要+1，这个地方需要显示，所以+1
+                        queren.setText(+year+"-"+(++month)+"-"+day);      //将选择的日期显示到TextView中,因为之前获取month直接使用，所以不需要+1，这个地方需要显示，所以+1
                     }
                 };
                 DatePickerDialog dialog3=new DatePickerDialog(DetailActivity.this, 0,listener3,year,month,day);
@@ -276,7 +296,7 @@ public class DetailActivity extends Activity {
     }
     private void upLoadImgList(){
         for( int i = 0;i<8;i++){
-            if (!(image_urls.get(i).equals("")||image_urls.get(i)==null)) {
+            if (!(image_urls.get(i).equals("")||image_urls.get(i)==null||image_urls.get(i).startsWith("http"))) {
                 final BmobFile bmobFile = new BmobFile(new File(getPath(this, Uri.parse(image_urls.get(i)))));
                 bmobFile.uploadblock(new UploadFileListener() {
                     @Override
@@ -293,11 +313,12 @@ public class DetailActivity extends Activity {
                     }
                 });
             }else{
-                image_urls_cdn.add("");
+                image_urls_cdn.add(image_urls.get(i));
             }
         }
     }
     private void upLoadOrder(){
+
         Order order = new Order(detail_id.getText().toString().trim(),
                 image_urls_cdn,
                 xiadan.getText().toString().trim(),
@@ -306,15 +327,25 @@ public class DetailActivity extends Activity {
                 detail_remark.getText().toString().trim(),
                 companyobjectid
         );
-        order.save(new SaveListener<String>() {
-            @Override
-            public void done(String s, BmobException e) {
-                setResult(200,intent);
-                finish();
+        if(type==REQUESTCODE_ADD){
+            order.save(new SaveListener<String>() {
+                @Override
+                public void done(String s, BmobException e) {
+                    setResult(200,intent);
+                    finish();
 
-            }
-        });
+                }
+            });
+        }else {
+            order.update(orderobjectid, new UpdateListener() {
+                @Override
+                public void done(BmobException e) {
+                    setResult(200,intent);
+                    finish();
+                }
+            });
 
+        }
     }
     private void chooseimg(View view){
         currentImageView= (ImageView) view;

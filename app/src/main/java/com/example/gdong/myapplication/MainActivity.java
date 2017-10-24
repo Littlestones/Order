@@ -43,9 +43,8 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else {
+                    button.setClickable(false);
                     search(editText.getText().toString().trim());
-
-
                 }
 
             }
@@ -69,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     new MyDialog(MainActivity.this, "没有找到对应的订单,请输入正确的编号");
                 }
+                button.setClickable(true);
 
             }
 

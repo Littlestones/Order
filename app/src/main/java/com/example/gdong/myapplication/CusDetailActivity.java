@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,7 +15,9 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.example.gdong.myapplication.mode.Order;
 
+import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Gdong on 2017/9/6.
@@ -28,7 +31,8 @@ public class CusDetailActivity extends Activity{
     private TextView queren;
     private TextView detail_id;
     private TextView detail_remark;
-    private HashMap<Integer,String> image_urls;
+    private List<String> image_urls;
+    private int image_index;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,10 +56,12 @@ public class CusDetailActivity extends Activity{
         queren.setText(order.getDetail_queren());
         detail_id.setText(order.getId());
         detail_remark.setText(order.getRemark());
+        image_urls=order.getImage_urls();
 
         boolean flag=false;
         for (int i=R.id.img8;i>=R.id.img1;i--){
             if(order.getImage_urls().get(i-R.id.img1)!=null){
+                image_index=i-R.id.img1;
                 Glide.with(CusDetailActivity.this)
                         .load(order.getImage_urls().get(i-R.id.img1))
                         .fitCenter()
@@ -70,6 +76,18 @@ public class CusDetailActivity extends Activity{
                             }
                         });
                 flag=true;
+                cusdetail_img.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent();
+                        Bundle mbundle= new Bundle();
+                        mbundle.putInt("image_index",image_index);
+                        mbundle.putSerializable("image_urls",(Serializable)image_urls);
+                        intent.setClass(CusDetailActivity.this, ImgDetailActivity.class);
+                        intent.putExtras(mbundle);
+                        startActivity(intent);
+                    }
+                });
                 break;
             }
         }

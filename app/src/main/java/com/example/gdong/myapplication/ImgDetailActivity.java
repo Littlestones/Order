@@ -27,6 +27,7 @@ import com.github.chrisbanes.photoview.PhotoView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Gdong on 2017/9/26.
@@ -35,7 +36,7 @@ import java.util.HashMap;
 public class ImgDetailActivity extends Activity {
 
     private static final String STATE_POSITION = "STATE_POSITION";
-    private ArrayList<String> image_list;
+    private List<String> image_list;
     private int image_index;
     private LinearLayout ll_indicator;
     private ViewPager mPager;
@@ -47,13 +48,18 @@ public class ImgDetailActivity extends Activity {
         setContentView(R.layout.activity_img_detail);
         mPager = (HackyViewPager) findViewById(R.id.pager);
         Intent intent = getIntent();
-        HashMap<String, String> message = (HashMap<String, String>) intent.getSerializableExtra("image_urls");
-        image_list= (ArrayList<String>) message.values();
-        image_index = getIntent().getIntExtra("image_index",0);
+        image_list = (List<String>) intent.getSerializableExtra("image_urls");
+        for(int i=image_list.size()-1;i>=0;i--){
+            if(image_list.get(i).equals("")||image_list.get(i)==null){
+                image_list.remove(i);
+            }
+        }
+        Log.i("1",image_list.toString());
+        image_index =intent.getExtras().getInt("image_index",0);
         mPager.setAdapter(new SamplePagerAdapter());
         ll_indicator = (LinearLayout) findViewById(R.id.ll_indicator);
         if (image_list.size() > 1) {
-            addIndicator(image_list, ll_indicator);
+            addIndicator((ArrayList<String>) image_list, ll_indicator);
         }
         mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
