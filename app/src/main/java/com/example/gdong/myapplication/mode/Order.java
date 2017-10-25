@@ -19,6 +19,9 @@ public class Order extends BmobObject implements Serializable{
     private String detail_jiaoqi;
     private String detail_queren;
 
+    public Order() {
+    }
+
     public Order(String id, List<String> image_urls, String detail_xiadan, String detail_jiaoqi, String detail_queren, String remark, String companyid) {
         this.id = id;
         this.image_urls = image_urls;

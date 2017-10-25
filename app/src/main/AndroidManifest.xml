@@ -41,6 +41,10 @@
         <activity android:name=".ImgDetailActivity"></activity>
         <activity android:name=".OrderListActivity"></activity>
         <activity android:name=".NewCompany" android:windowSoftInputMode="adjustPan">></activity>
+        <activity
+            android:name="cn.bmob.v3.update.UpdateDialogActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
 
         <!--Image Selector Entry-->
     </application>

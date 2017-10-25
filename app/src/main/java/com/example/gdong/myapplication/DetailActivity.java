@@ -81,12 +81,14 @@ public class DetailActivity extends Activity {
     private String companyobjectid;
     private String orderobjectid;
     private int type;
+    private int img_upload=0;//等待上传的图片数量
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         image_urls=new ArrayList();
         image_urls_cdn=new ArrayList();
         for(int i=0;i<8;i++){
+            image_urls_cdn.add("");
             image_urls.add("");
         }
         companyobjectid=getIntent().getExtras().getString("companyid");
@@ -195,6 +197,13 @@ public class DetailActivity extends Activity {
                 ViewGroup vg =(ViewGroup)view.getParent().getParent();
                 ImageView  imgview = (ImageView) vg.getChildAt(0);
                 imgview.setImageResource(R.drawable.a1);
+                if(image_urls.get(imgview.getId()-R.id.img1).startsWith("http")){
+                    BmobFile file = new BmobFile();
+                    file.setUrl(image_urls.get(imgview.getId()-R.id.img1));
+                    file.delete();
+                }
+
+                image_urls.set(imgview.getId()-R.id.img1,"");
                 imgview.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -214,25 +223,23 @@ public class DetailActivity extends Activity {
                     new MyDialog(this,"请输入订单编号");
                     return;
             }
-            if(type==REQUESTCODE_UPDATE){
-                upLoadImgList();
-            }else {
-                Log.i("type",type+"");
                 BmobQuery<Order> bmobQuery = new BmobQuery<Order>();
                 bmobQuery.addWhereEqualTo("id", detail_id.getText().toString().trim());
                 bmobQuery.findObjects(new FindListener<Order>() {
                     @Override
                     public void done(List<Order> list, BmobException e) {
                         if (e == null&&list.size()!=0) {
-                            Log.i("list",list.toString());
-                            new MyDialog(DetailActivity.this, "已经存在相同编号的订单，请重新输入。");
-                            return;
+                            if(!list.get(0).getObjectId().equals(orderobjectid)){
+                                new MyDialog(DetailActivity.this, "已经存在相同编号的订单，请重新输入。");
+                                return;
+                            }
+                            upLoadImgList();
                         } else {
                             upLoadImgList();
                         }
                     }
                 });
-            }
+
 
                 break;
             case R.id.detail_xiadan_clickarea:
@@ -295,15 +302,25 @@ public class DetailActivity extends Activity {
         day=cal.get(Calendar.DAY_OF_MONTH);
     }
     private void upLoadImgList(){
+        final List<String> truepath=new ArrayList();;
+        for (int i=0;i<8;i++){
+            truepath.add(getPath(this, Uri.parse(image_urls.get(i))));
+        }
         for( int i = 0;i<8;i++){
             if (!(image_urls.get(i).equals("")||image_urls.get(i)==null||image_urls.get(i).startsWith("http"))) {
+                img_upload++;
                 final BmobFile bmobFile = new BmobFile(new File(getPath(this, Uri.parse(image_urls.get(i)))));
-                bmobFile.uploadblock(new UploadFileListener() {
+                bmobFile.upload(new UploadFileListener() {
                     @Override
                     public void done(BmobException e) {
                         if (e == null) {
-                            image_urls_cdn.add(bmobFile.getUrl());
-                            if (image_urls_cdn.size()==8){
+                            for (int k=0;k<8;k++){
+                                if(bmobFile.getLocalFile().toURI().toString().split("file:")[1].equals(truepath.get(k))){
+                                image_urls_cdn.set(k,bmobFile.getUrl());
+                                }
+                            }
+                            img_upload--;
+                            if (img_upload ==0){
                                 upLoadOrder();
                             }
                         } else {
@@ -313,7 +330,10 @@ public class DetailActivity extends Activity {
                     }
                 });
             }else{
-                image_urls_cdn.add(image_urls.get(i));
+                image_urls_cdn.set(i,image_urls.get(i));
+                if (i==7&&img_upload==0){
+                    upLoadOrder();
+                }
             }
         }
     }

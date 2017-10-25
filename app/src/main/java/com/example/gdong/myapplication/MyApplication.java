@@ -21,8 +21,11 @@ import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.BmobUpdateListener;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UploadFileListener;
+import cn.bmob.v3.update.BmobUpdateAgent;
+import cn.bmob.v3.update.UpdateResponse;
 
 import static com.example.gdong.myapplication.util.ContentUriUtil.getPath;
 
@@ -36,15 +39,16 @@ public class MyApplication extends Application{
     public static final int REQUESTCODE_select    = 102;
     public static final int REQUESTCODE_ADD_SUCCESS    = 200;
 
-
-
     public static List<Company> companyArrayList ;
     public static ArrayList<Order> orderArrayList;
     @Override
     public void onCreate() {
         super.onCreate();
+
         RxUtils.init(this);
         Bmob.initialize(this, "1331f3743c9d29b1328129111b1e32f6");
+      //  Bmob.initialize(this, "6db775fd0cd7f4a12af076d1e77e600d");
+
         initData();
 
     }

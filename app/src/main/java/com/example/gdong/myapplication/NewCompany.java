@@ -45,7 +45,6 @@ import static org.csii.yeeframe.ui.ViewInject.toast;
 
 public class NewCompany extends Activity {
     List<Uri> mSelected;
-
     private EditText companyid;
     private EditText companyname;
     private ImageView icon ;

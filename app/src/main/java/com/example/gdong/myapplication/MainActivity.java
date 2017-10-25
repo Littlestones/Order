@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,8 +18,11 @@ import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.BmobUpdateListener;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
+import cn.bmob.v3.update.BmobUpdateAgent;
+import cn.bmob.v3.update.UpdateResponse;
 
 public class MainActivity extends AppCompatActivity {
     Button button;
@@ -29,10 +33,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        BmobUpdateAgent.setUpdateListener(new BmobUpdateListener() {
+//            @Override
+//            public void onUpdateReturned(int i, UpdateResponse updateResponse) {
+//
+//            }
+//        });
         button= (Button) findViewById(R.id.main_select);
         editText = (EditText) findViewById(R.id.main_editText);
-//        linearLayout= (LinearLayout) findViewById(R.id.content);
-//        linearLayout.setBackgroundResource(R.drawable.main_background);
+        linearLayout= (LinearLayout) findViewById(R.id.content);
+        linearLayout.setBackgroundResource(R.drawable.main_background);
 
 
         button.setOnClickListener(new View.OnClickListener() {
