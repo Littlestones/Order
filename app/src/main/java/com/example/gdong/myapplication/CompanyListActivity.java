@@ -52,6 +52,7 @@ public class CompanyListActivity extends Activity {
         setContentView(R.layout.activity_result);
         iv_add= (ImageView) findViewById(R.id.add);
         iv_search= (SearchView) findViewById(R.id.search);
+        iv_search.setVisibility(View.GONE);
         detail_title= (TextView) findViewById(R.id.detail_title);
         initData();
         detail_title.setText("公司列表");
