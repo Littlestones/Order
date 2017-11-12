@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -46,6 +47,7 @@ import static org.csii.yeeframe.ui.ViewInject.toast;
 public class NewCompany extends Activity {
     List<Uri> mSelected;
     private EditText companyid;
+    private Button save;
     private EditText companyname;
     private ImageView icon ;
     private Company company;
@@ -74,6 +76,8 @@ public class NewCompany extends Activity {
 
         switch (id) {
             case R.id.new_company_save:
+                save= (Button) findViewById(R.id.new_company_save);
+                save.setClickable(false);
                 company= new Company(companyid.getText().toString().trim(),
                         companyname.getText().toString().trim(),
                         mSelected.get(0).toString()
@@ -96,6 +100,7 @@ public class NewCompany extends Activity {
                         } else {
                             Toast.makeText(getApplicationContext(), "图片上传失败", Toast.LENGTH_SHORT);
                             company.setIcon("");
+                            save.setClickable(true);
                         }
                     }
                 });

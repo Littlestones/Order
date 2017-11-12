@@ -18,6 +18,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+
                     android:textSize="18sp"
                     android:id="@+id/num_title"
                     android:layout_width="wrap_content"
@@ -27,11 +28,11 @@
                     android:layout_alignParentStart="true" />
 
                 <EditText
+                    android:singleLine="true"
                     android:id="@+id/detail_id"
                     android:background="@drawable/edit_background"
-                    android:layout_width="100dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:hint="请输入编号"
                     android:layout_alignParentTop="true"
                     android:layout_toEndOf="@+id/num_title" />
@@ -66,7 +67,7 @@
                         <TextView
                             android:layout_gravity="center_vertical"
                             style="@style/detail_text"
-                            android:text="描述" />
+                            android:text="文件" />
                         <ImageView
                             style="@style/detail_icon_delete"
                             />
@@ -93,7 +94,7 @@
 
                         <TextView
                             style="@style/detail_text"
-                            android:text="描述" />
+                            android:text="确认" />
 
                         <ImageView
                             style="@style/detail_icon_delete"/>
@@ -120,7 +121,7 @@
 
                         <TextView
                             style="@style/detail_text"
-                            android:text="描述" />
+                            android:text="排版" />
 
                         <ImageView
                             style="@style/detail_icon_delete"/>
@@ -147,7 +148,7 @@
 
                         <TextView
                             style="@style/detail_text"
-                            android:text="描述" />
+                            android:text="印刷" />
 
                         <ImageView
                             style="@style/detail_icon_delete"/>
@@ -181,7 +182,7 @@
 
                         <TextView
                             style="@style/detail_text"
-                            android:text="描述"
+                            android:text="压痕"
                             />
                         <ImageView
                             style="@style/detail_icon_delete"/>
@@ -208,7 +209,7 @@
 
                         <TextView
                             style="@style/detail_text"
-                            android:text="描述" />
+                            android:text="分切" />
 
                         <ImageView
                             style="@style/detail_icon_delete"/>
@@ -235,7 +236,7 @@
 
                         <TextView
                             style="@style/detail_text"
-                            android:text="描述" />
+                            android:text="包装" />
 
                         <ImageView
                             style="@style/detail_icon_delete"/>
@@ -262,7 +263,7 @@
 
                         <TextView
                             style="@style/detail_text"
-                            android:text="描述" />
+                            android:text="送货" />
                         <ImageView
                             style="@style/detail_icon_delete"/>
                     </LinearLayout>
@@ -391,6 +392,7 @@
                     android:orientation="horizontal">
 
                     <Button
+
                         android:id="@+id/detail_cancel"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"

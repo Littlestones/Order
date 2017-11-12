@@ -60,7 +60,7 @@ public class CusDetailActivity extends Activity{
 
         boolean flag=false;
         for (int i=R.id.img8;i>=R.id.img1;i--){
-            if(order.getImage_urls().get(i-R.id.img1)!=null){
+            if(!(order.getImage_urls().get(i-R.id.img1)==null||order.getImage_urls().get(i-R.id.img1).length()==0)){
                 image_index=i-R.id.img1;
                 Glide.with(CusDetailActivity.this)
                         .load(order.getImage_urls().get(i-R.id.img1))

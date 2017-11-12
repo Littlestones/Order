@@ -7,11 +7,13 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
@@ -80,10 +82,12 @@ public class OrderListActivity extends Activity{
             }
         });
         mRecyclerView = (RecyclerView) findViewById(R.id.review);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(OrderListActivity.this,4));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this,4));
+        mRecyclerView.setAdapter(mAdapter = new HomeAdapter());
 
 
     }
+
     public  void initData(String companyobjectid){
         BmobQuery<Order> query = new BmobQuery<Order>();
         query.setLimit(50);
@@ -108,6 +112,13 @@ public class OrderListActivity extends Activity{
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mDatas = null;
+        searchresult = null;
     }
 
     public void click(View view) {
@@ -190,7 +201,7 @@ public class OrderListActivity extends Activity{
             holder.tv1.setText(searchresult.get(position).getId());
             boolean flag=false;
             for (int i=7;i>=0;i--){
-                if(searchresult.get(position).getImage_urls().get(i)!=null){
+                if(!(searchresult.get(position).getImage_urls().get(i)==null||searchresult.get(position).getImage_urls().get(i).length()==0)){
 
                     Glide.with(OrderListActivity.this)
                             .load(searchresult.get(position).getImage_urls().get(i))
@@ -239,7 +250,7 @@ public class OrderListActivity extends Activity{
                 super(view);
                 linearLayout= (LinearLayout) view.findViewById(R.id.item);
                 tv1 = (TextView) view.findViewById(R.id.itv1);
-                iv1 = (ImageView) view.findViewById(R.id.iv1);
+              iv1 = (ImageView) view.findViewById(R.id.iv1);
             }
         }
     }

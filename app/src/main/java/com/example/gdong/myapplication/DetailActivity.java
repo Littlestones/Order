@@ -15,6 +15,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -80,6 +81,7 @@ public class DetailActivity extends Activity {
     private Intent intent;
     private String companyobjectid;
     private String orderobjectid;
+    private Button save;
     private int type;
     private int img_upload=0;//等待上传的图片数量
 
@@ -102,6 +104,7 @@ public class DetailActivity extends Activity {
         queren= (TextView) findViewById(R.id.detail_queren);
         detail_id= (TextView) findViewById(R.id.detail_id);
         detail_remark= (EditText) findViewById(R.id.detail_remark);
+        save= (Button) findViewById(R.id.detail_save);
         initData();
     }
 
@@ -219,10 +222,13 @@ public class DetailActivity extends Activity {
                 break;
 
             case R.id.detail_save:
+                save.setClickable(false);
                 if(detail_id.getText().toString().trim().equals("")){
                     new MyDialog(this,"请输入订单编号");
+                    save.setClickable(true);
                     return;
             }
+
                 BmobQuery<Order> bmobQuery = new BmobQuery<Order>();
                 bmobQuery.addWhereEqualTo("id", detail_id.getText().toString().trim());
                 bmobQuery.findObjects(new FindListener<Order>() {
@@ -231,6 +237,7 @@ public class DetailActivity extends Activity {
                         if (e == null&&list.size()!=0) {
                             if(!list.get(0).getObjectId().equals(orderobjectid)){
                                 new MyDialog(DetailActivity.this, "已经存在相同编号的订单，请重新输入。");
+                                save.setClickable(true);
                                 return;
                             }
                             upLoadImgList();
@@ -302,6 +309,7 @@ public class DetailActivity extends Activity {
         day=cal.get(Calendar.DAY_OF_MONTH);
     }
     private void upLoadImgList(){
+
         final List<String> truepath=new ArrayList();;
         for (int i=0;i<8;i++){
             truepath.add(getPath(this, Uri.parse(image_urls.get(i))));
@@ -325,6 +333,7 @@ public class DetailActivity extends Activity {
                             }
                         } else {
                             Log.i("info","上传失败"+e.toString());
+                            save.setClickable(true);
 
                         }
                     }
@@ -351,8 +360,17 @@ public class DetailActivity extends Activity {
             order.save(new SaveListener<String>() {
                 @Override
                 public void done(String s, BmobException e) {
-                    setResult(200,intent);
-                    finish();
+                    if(e==null){
+                        setResult(200,intent);
+                        finish();
+
+                    }
+                    else {
+                        Log.i("info","上传失败"+e.toString());
+                        save.setClickable(true);
+
+                    }
+
 
                 }
             });
@@ -360,8 +378,16 @@ public class DetailActivity extends Activity {
             order.update(orderobjectid, new UpdateListener() {
                 @Override
                 public void done(BmobException e) {
-                    setResult(200,intent);
-                    finish();
+                    if(e==null){
+                        setResult(200,intent);
+                        finish();
+
+                    }
+                    else {
+                        Log.i("info","上传失败"+e.toString());
+                        save.setClickable(true);
+
+                    }
                 }
             });
 

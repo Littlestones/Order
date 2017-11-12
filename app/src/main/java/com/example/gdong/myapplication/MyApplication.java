@@ -47,7 +47,7 @@ public class MyApplication extends Application{
 
         RxUtils.init(this);
         Bmob.initialize(this, "1331f3743c9d29b1328129111b1e32f6");
-      //  Bmob.initialize(this, "6db775fd0cd7f4a12af076d1e77e600d");
+        //Bmob.initialize(this, "6db775fd0cd7f4a12af076d1e77e600d");
 
         initData();
 
